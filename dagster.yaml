@@ -1,6 +1,7 @@
 storage:
   postgres:
-    postgres_url: "postgresql://${PSQL_USER}:${PSQL_PASSWORD}@localhost:5432/dagster_db"
+    postgres_url:
+      env: PSQL_URL
 
 scheduler:
   module: dagster.core.scheduler
