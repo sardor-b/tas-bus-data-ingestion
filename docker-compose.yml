@@ -19,7 +19,8 @@ services:
       POSTGRES_PASSWORD: "${PSQL_PASSWORD}"
       POSTGRES_DB: "${PSQL_DB}"
     ports:
-      - "127.0.0.0:5432:5432"
+      - "127.0.0.1:5432:5432"
+      - "172.29.172.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
       - ./data:/data
@@ -44,8 +45,9 @@ services:
     container_name: kafka
     restart: unless-stopped
     ports:
-      - "127.0.0.0:9092:9092"       # External (host) access
-      - "127.0.0.0:29092:29092"     # Internal (container) access
+      - "172.29.172.1:9092:9092"       # External (host) access
+      - "127.0.0.1:9092:9092"       # External (host) access
+      - "127.0.0.1:29092:29092"     # Internal (container) access
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
@@ -81,7 +83,8 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "127.0.0.0:8083:8083"
+      - "127.0.0.1:8083:8083"
+      - "172.29.172.1:8083:8083"
     environment:
       BOOTSTRAP_SERVERS: kafka:29092
       GROUP_ID: cdc_connect_group
@@ -111,7 +114,8 @@ services:
       kafka:
         condition: service_healthy
     ports:
-      - "127.0.0.0:8080:8080"
+      - "127.0.0.1:8080:8080"
+      - "172.29.172.1:8080:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
@@ -125,8 +129,10 @@ services:
     container_name: clickhouse
     restart: unless-stopped
     ports:
-      - "127.0.0.0:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
-      - "127.0.0.0:9000:9000"   # Native TCP interface
+      - "127.0.0.1:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
+      - "127.0.0.1:9000:9000"   # Native TCP interface
+      - "172.29.172.1:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
+      - "172.29.172.1:9000:9000"   # Native TCP interface
     environment:
       CLICKHOUSE_USER: "${CH_USER}"
       CLICKHOUSE_PASSWORD: "${CH_PASSWORD}"
@@ -150,7 +156,8 @@ services:
     container_name: grafana
     restart: unless-stopped
     ports:
-      - "127.0.0.0:3000:3000"
+      - "127.0.0.1:3000:3000"
+      - "172.29.172.1:3000:3000"
     environment:
       GF_SECURITY_ADMIN_USER: "${GRAFANA_USER}"
       GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_PASSWORD}"
