@@ -4,7 +4,6 @@
     <data-source name="DWH" uuid="30401356-c55a-4138-9a8f-c8cafa6fb2cc">
       <database-info product="ClickHouse" version="26.1.4.35" jdbc-version="9.4" driver-name="ClickHouse JDBC Driver" driver-version="0.9.4" dbms="CLICKHOUSE" exact-version="26.1.4.35" exact-driver-version="9.4">
         <identifier-quote-string>`</identifier-quote-string>
-        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>

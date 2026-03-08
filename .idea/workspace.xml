@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_db_dagster_db.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/definitions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" afterDir="false" />
-    </list>
+    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,6 +48,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHELLCHECK.PATH": "/Users/sardorb/Library/Application Support/JetBrains/PyCharm2025.3/plugins/Shell Script/shellcheck",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
@@ -89,6 +85,7 @@
       <option name="presentableId" value="Default" />
       <updated>1772951039632</updated>
       <workItem from="1772951040814" duration="2888000" />
+      <workItem from="1772983964560" duration="348000" />
     </task>
     <servers />
   </component>
