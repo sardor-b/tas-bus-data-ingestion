@@ -1,4 +1,4 @@
 .env
 ssh-tunnel.sh
-/src/api_loader/logs/
 /ssh.sh
+/src/api_loader/logs/bus_routes.log
