@@ -49,6 +49,7 @@ def op_ingest_bus_routes(context: OpExecutionContext) -> datetime:
     )
 
     context.log.info("Bus route ingestion completed successfully.")
+
     return execution_time
 
 
@@ -74,6 +75,8 @@ def op_load_route_id_name(context: OpExecutionContext, execution_time: datetime)
     )
 
     context.log.info("route_id_name load completed successfully.")
+
+    return execution_time
 
 
 @op

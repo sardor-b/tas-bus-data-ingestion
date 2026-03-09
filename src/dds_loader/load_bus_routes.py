@@ -109,6 +109,7 @@ async def load_route_origin_destination(
                     where
                         update_dt::date = (%(date)s)::date
                     order by update_dt desc
+                    limit 1
                  ) as t
             inner join dds.route_id_name rin
                 on rin.route_id = (t.value ->> 'id')::int
@@ -121,7 +122,7 @@ async def load_route_origin_destination(
                     destination_name_ru
                 from dds.route_origin_destination
                 where route_id = rin.id
-                order by rin.create_dt desc
+                order by create_dt desc
                 limit 1
             ) rf on true
             where
@@ -178,6 +179,7 @@ async def load_route_fleet(
                 SELECT jsonb_array_elements(object_value) AS value
                 FROM stg.bus_routes
                 WHERE update_dt::date = (%(date)s)::date
+                limit 1
             ) AS t
             INNER JOIN dds.route_id_name rin
                 ON rin.route_id = (t.value ->> 'id')::int
@@ -197,7 +199,7 @@ async def load_route_fleet(
                     rf.route_id IS NULL -- Check if no previous record exists
                     OR COALESCE(t.value ->> 'busType', 'None') != rf.bus_type
                     OR (t.value ->> 'busSize')::int != rf.fleet_size
-                );
+                )
             ;
         """,
         params={
@@ -243,6 +245,7 @@ async def load_route_start_end_time(
                 SELECT jsonb_array_elements(object_value) AS value
                 FROM stg.bus_routes
                 WHERE update_dt::date = (%(date)s)::date
+                limit 1
             ) AS t
             INNER JOIN dds.route_id_name rin
                 ON rin.route_id = (t.value ->> 'id')::int
@@ -276,19 +279,19 @@ async def load_route_start_end_time(
 
 
 # TODO: remove
-if __name__ == '__main__':
-    import os
-    import asyncio
-    from dotenv import load_dotenv
-    load_dotenv(dotenv_path="../../.env")
-
-    HOST = '172.29.172.1'
-    PORT = 5432
-    DATABASE = 'main'
-    USER = os.getenv('PSQL_USER')
-    PASSWORD = os.getenv('PSQL_PASSWORD')
-
-    asyncio.run(
-        load_route_id_name(dt=datetime.now(), host=HOST, port=PORT, database=DATABASE, user=USER,
-                          password=PASSWORD)
-    )
+# if __name__ == '__main__':
+#     import os
+#     import asyncio
+#     from dotenv import load_dotenv
+#     load_dotenv(dotenv_path="../../.env")
+#
+#     HOST = '172.29.172.1'
+#     PORT = 5432
+#     DATABASE = 'main'
+#     USER = os.getenv('PSQL_USER')
+#     PASSWORD = os.getenv('PSQL_PASSWORD')
+#
+#     asyncio.run(
+#         load_route_id_name(dt=datetime.now(), host=HOST, port=PORT, database=DATABASE, user=USER,
+#                           password=PASSWORD)
+#     )
