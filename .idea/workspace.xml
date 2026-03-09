@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/discarded_buses.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_schema_dds.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_fleet.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_id_name.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_origin_destination.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_start_end_time.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dds_loader/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dds_loader/load_bus_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b/storage_v2/_src_/database/main.uQUzAA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b/storage_v2/_src_/database/main.uQUzAA/schema/public.abK9xQ.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b/storage_v2/_src_/database/main.uQUzAA/schema/stg.Jr4BAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b/storage_v2/_src_/database/main.uQUzAA/schema/stg.Jr4BAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api_loader/bus_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/api_loader/bus_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dds_loader/load_bus_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dds_loader/load_bus_routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dds_loader/logs/bus_routes.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/dds_loader/logs/bus_routes.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +125,7 @@
       <option name="presentableId" value="Default" />
       <updated>1772951039632</updated>
       <workItem from="1772951040814" duration="2888000" />
-      <workItem from="1772983964560" duration="32318000" />
+      <workItem from="1772983964560" duration="32636000" />
     </task>
     <servers />
   </component>
@@ -157,7 +142,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$postgres.coverage" NAME="postgres Coverage Results" MODIFIED="1772989583327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/connectors" />
-    <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$load_bus_routes.coverage" NAME="load_bus_routes Coverage Results" MODIFIED="1773064566264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dds_loader" />
+    <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$load_bus_routes.coverage" NAME="load_bus_routes Coverage Results" MODIFIED="1773066006086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dds_loader" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$ingest_bus_routes.coverage" NAME="ingest_bus_routes Coverage Results" MODIFIED="1773044344933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pipelines/jobs" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$bus_routes.coverage" NAME="bus_routes Coverage Results" MODIFIED="1772990529101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/api_loader" />
   </component>

@@ -50,6 +50,7 @@ async def load_route_id_name(
                     where
                         update_dt::date = (%(date)s)::date
                     order by update_dt desc
+                    limit 1
                  ) as t
             where
                 (t.value ->> 'id')::int != 0
@@ -275,18 +276,19 @@ async def load_route_start_end_time(
 
 
 # TODO: remove
-# if __name__ == '__main__':
-#     import os
-#     from dotenv import load_dotenv
-#     load_dotenv(dotenv_path="../../.env")
-#
-#     HOST = '172.29.172.1'
-#     PORT = 5432
-#     DATABASE = 'main'
-#     USER = os.getenv('PSQL_USER')
-#     PASSWORD = os.getenv('PSQL_PASSWORD')
-#
-#     asyncio.run(
-#         load_route_start_end_time(dt=datetime.now(), host=HOST, port=PORT, database=DATABASE, user=USER,
-#                           password=PASSWORD)
-#     )
+if __name__ == '__main__':
+    import os
+    import asyncio
+    from dotenv import load_dotenv
+    load_dotenv(dotenv_path="../../.env")
+
+    HOST = '172.29.172.1'
+    PORT = 5432
+    DATABASE = 'main'
+    USER = os.getenv('PSQL_USER')
+    PASSWORD = os.getenv('PSQL_PASSWORD')
+
+    asyncio.run(
+        load_route_id_name(dt=datetime.now(), host=HOST, port=PORT, database=DATABASE, user=USER,
+                          password=PASSWORD)
+    )
