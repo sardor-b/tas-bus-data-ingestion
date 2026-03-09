@@ -11,5 +11,15 @@ for 1H: 10800*101639 = 1097701200 bytes = 1.098 GB/hour
 
 ingest raw JSON to stg -> remove after 1H
 
+------------------------------------------------------------
+
+amn0 dependencies:
+- dagster webserver: http://172.29.172.1:3001/
+- postgresql 172.29.172.1:5432
+- clickhouse: 172.29.172.1:8123
+- kafka ui: http://172.29.172.1:8080/
+- grafana: http://172.29.172.1:3000/
+
+stg.bus_routes -> dds.buses -> [info about buses] -> get updates about bus stations & gps updates
 
 

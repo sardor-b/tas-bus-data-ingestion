@@ -31,7 +31,7 @@ async def get_request(semaphore: asyncio.Semaphore, session: aiohttp.ClientSessi
                 return None
 
 
-async def main(
+async def ingest_bus_routes(
     source: str,
     source_url: str,
     host: str,
@@ -78,26 +78,20 @@ async def main(
     logger.info("END bus route ingestion")
 
 
-if __name__ == '__main__':
-    load_dotenv(dotenv_path="../../.env")
-
-    SOURCE = os.getenv('SOURCE')
-    SOURCE_URL = os.getenv('SOURCE_BUS_ROUTES')
-
-    HOST = '172.29.172.1'
-    PORT = 5432
-    DATABASE = 'main'
-    USER = os.getenv('PSQL_USER')
-    PASSWORD = os.getenv('PSQL_PASSWORD')
-
-    asyncio.run(
-        main(
-            source=SOURCE,
-            source_url=SOURCE_URL,
-            host=HOST,
-            port=PORT,
-            database=DATABASE,
-            user=USER,
-            password=PASSWORD
-        )
-    )
+# TODO: remove
+# if __name__ == '__main__':
+#     load_dotenv(dotenv_path="../../.env")
+#
+#     SOURCE = os.getenv('SOURCE')
+#     SOURCE_URL = os.getenv('SOURCE_BUS_ROUTES')
+#
+#     HOST = '172.29.172.1'
+#     PORT = 5432
+#     DATABASE = 'main'
+#     USER = os.getenv('PSQL_USER')
+#     PASSWORD = os.getenv('PSQL_PASSWORD')
+#
+#     asyncio.run(
+#         ingest_bus_routes(source=SOURCE, source_url=SOURCE_URL, host=HOST, port=PORT, database=DATABASE, user=USER,
+#                           password=PASSWORD)
+#     )

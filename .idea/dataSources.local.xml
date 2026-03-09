@@ -27,10 +27,10 @@
             <node kind="database" qname="@">
               <node kind="schema" qname="@" />
             </node>
+            <node kind="database" qname="dagster_db" />
             <node kind="database" qname="main">
               <node kind="schema" qname="stg" />
             </node>
-            <node kind="database" qname="dagster_db" />
           </node>
         </introspection-scope>
       </schema-mapping>

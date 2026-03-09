@@ -1,2 +1,4 @@
 .env
 ssh-tunnel.sh
+/src/api_loader/logs/
+/ssh.sh
