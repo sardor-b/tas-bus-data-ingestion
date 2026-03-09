@@ -44,13 +44,16 @@ async def load_route_id_name(
                 t.value ->> 'name' as route_name
             from
                 (
+                select
+                    jsonb_array_elements(v.object_value) as value
+                from (
                     select
-                        jsonb_array_elements(object_value) as value
+                        object_value
                     from stg.bus_routes
-                    where
-                        update_dt::date = (%(date)s)::date
+                    where update_dt::date = current_date
                     order by update_dt desc
                     limit 1
+                     ) v
                  ) as t
             where
                 (t.value ->> 'id')::int != 0
@@ -103,13 +106,16 @@ async def load_route_origin_destination(
                 NOW() AS update_dt
             from
                 (
+                select
+                    jsonb_array_elements(v.object_value) as value
+                from (
                     select
-                        jsonb_array_elements(object_value) as value
+                        object_value
                     from stg.bus_routes
-                    where
-                        update_dt::date = (%(date)s)::date
+                    where update_dt::date = current_date
                     order by update_dt desc
                     limit 1
+                     ) v
                  ) as t
             inner join dds.route_id_name rin
                 on rin.route_id = (t.value ->> 'id')::int
@@ -175,12 +181,19 @@ async def load_route_fleet(
                 (t.value ->> 'busSize')::int AS fleet_size,
                 NOW() AS create_dt,
                 NOW() AS update_dt
-            FROM (
-                SELECT jsonb_array_elements(object_value) AS value
-                FROM stg.bus_routes
-                WHERE update_dt::date = (%(date)s)::date
-                limit 1
-            ) AS t
+            FROM 
+                (
+                select
+                    jsonb_array_elements(v.object_value) as value
+                from (
+                    select
+                        object_value
+                    from stg.bus_routes
+                    where update_dt::date = current_date
+                    order by update_dt desc
+                    limit 1
+                     ) v
+                 ) as t
             INNER JOIN dds.route_id_name rin
                 ON rin.route_id = (t.value ->> 'id')::int
             LEFT JOIN LATERAL (
@@ -241,12 +254,19 @@ async def load_route_start_end_time(
                 (t.value ->> 'endTime')::time as end_time,
                 NOW() AS create_dt,
                 NOW() AS update_dt
-            FROM (
-                SELECT jsonb_array_elements(object_value) AS value
-                FROM stg.bus_routes
-                WHERE update_dt::date = (%(date)s)::date
-                limit 1
-            ) AS t
+            FROM 
+                (
+                select
+                    jsonb_array_elements(v.object_value) as value
+                from (
+                    select
+                        object_value
+                    from stg.bus_routes
+                    where update_dt::date = current_date
+                    order by update_dt desc
+                    limit 1
+                     ) v
+                 ) as t
             INNER JOIN dds.route_id_name rin
                 ON rin.route_id = (t.value ->> 'id')::int
             LEFT JOIN LATERAL (
