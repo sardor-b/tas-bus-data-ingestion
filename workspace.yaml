@@ -1,4 +1,4 @@
 load_from:
   - python_file:
       relative_path: pipelines/definitions.py
-      working_directory: /root/tas-bus-data-ingestion/pipelines
+      working_directory: /root/tas-bus-data-ingestion
