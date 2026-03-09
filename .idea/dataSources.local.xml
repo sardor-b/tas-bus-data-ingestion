@@ -29,7 +29,10 @@
             </node>
             <node kind="database" qname="dagster_db" />
             <node kind="database" qname="main">
-              <node kind="schema" qname="stg" />
+              <node kind="schema">
+                <name qname="stg" />
+                <name qname="dds" />
+              </node>
             </node>
           </node>
         </introspection-scope>

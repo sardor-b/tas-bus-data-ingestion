@@ -1,0 +1,21 @@
+2026-03-09 16:38:24,133 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:38:34,267 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:39:24,078 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:40:17,009 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:40:37,293 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:41:00,696 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:41:24,845 - __main__ - INFO - START dds.route_id_name load
+2026-03-09 16:41:30,051 - __main__ - INFO - END dds.route_id_name load. Loaded 0 records.
+2026-03-09 16:59:34,013 - __main__ - INFO - START dds.route_origin_destination load
+2026-03-09 16:59:39,062 - __main__ - INFO - END dds.route_origin_destination load. Loaded 0 records.
+2026-03-09 18:47:06,953 - __main__ - INFO - START dds.route_origin_destination load
+2026-03-09 18:47:12,640 - __main__ - INFO - END dds.route_origin_destination load. Loaded -3 records.
+2026-03-09 18:47:12,641 - __main__ - INFO - START dds.route_fleet load
+2026-03-09 18:47:18,115 - __main__ - INFO - END dds.route_fleet load. Loaded -10 records.
+2026-03-09 18:53:32,520 - __main__ - INFO - START dds.route_start_end_time load
+2026-03-09 18:55:15,908 - __main__ - INFO - START dds.route_start_end_time load
+2026-03-09 18:55:21,299 - __main__ - INFO - END dds.route_start_end_time load. Loaded 170 records.
+2026-03-09 18:55:23,743 - __main__ - INFO - START dds.route_start_end_time load
+2026-03-09 18:55:29,238 - __main__ - INFO - END dds.route_start_end_time load. Loaded 0 records.
+2026-03-09 18:56:06,380 - __main__ - INFO - START dds.route_start_end_time load
+2026-03-09 18:56:11,418 - __main__ - INFO - END dds.route_start_end_time load. Loaded 3 records.
