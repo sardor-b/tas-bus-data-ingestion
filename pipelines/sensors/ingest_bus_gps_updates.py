@@ -19,7 +19,7 @@ def gps_ingestion_job():
     # this job can even be empty or contain a 'pass' op.
     pass
 
-@sensor(job=gps_ingestion_job, minimum_interval_seconds=5)
+@sensor(job=gps_ingestion_job, minimum_interval_seconds=10)
 def gps_streaming_sensor(context: SensorEvaluationContext):
     """
     This sensor acts as a persistent 'daemon' process.
