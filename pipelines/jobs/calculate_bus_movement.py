@@ -35,7 +35,7 @@ def op_calc_bus_movement(context: OpExecutionContext):
 
 
 @op
-def op_truncate_stg_bus_gps_updates(context: OpExecutionContext, start_after: bool):
+def op_truncate_stg_bus_gps_updates(context: OpExecutionContext, after):
     context.log.info(f"Starting stg.bus_gps_updates table truncate")
 
     asyncio.run(
@@ -53,7 +53,8 @@ def op_truncate_stg_bus_gps_updates(context: OpExecutionContext, start_after: bo
 
 @job
 def bus_movement_job():
-    op_calc_bus_movement() >> op_truncate_stg_bus_gps_updates()
+    calc = op_calc_bus_movement()
+    op_truncate_stg_bus_gps_updates(after=calc)
 
 
 bus_movement_schedule = ScheduleDefinition(
