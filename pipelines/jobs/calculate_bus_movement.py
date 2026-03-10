@@ -60,6 +60,6 @@ def bus_movement_job():
 bus_movement_schedule = ScheduleDefinition(
     job=bus_movement_job,
     cron_schedule="0 21 * * *",
-    name="load_bus_info_at_2AM_GMT5",
+    name="calc_bus_movement_at_2AM_GMT5",
     execution_timezone="UTC",
 )
