@@ -4,7 +4,6 @@ networks:
 
 volumes:
   postgres_data:
-  kafka_data:
   clickhouse_data:
   clickhouse_logs:
   grafana_data:
@@ -24,14 +23,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql
       - ./data:/data
-    command:
-      - "postgres"
-      - "-c"
-      - "wal_level=logical"        # Required for Debezium CDC
-      - "-c"
-      - "max_replication_slots=5"
-      - "-c"
-      - "max_wal_senders=5"
     networks:
       - cdc_network
     healthcheck:
@@ -39,90 +30,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  kafka:
-    image: confluentinc/cp-kafka:8.0.0
-    container_name: kafka
-    restart: unless-stopped
-    ports:
-      - "172.29.172.1:9092:9092"       # External (host) access
-      - "127.0.0.1:9092:9092"       # External (host) access
-      - "127.0.0.1:29092:29092"     # Internal (container) access
-    environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-      KAFKA_LOG_RETENTION_HOURS: 24
-      CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
-    volumes:
-      - kafka_data:/var/lib/kafka/data
-    networks:
-      - cdc_network
-    healthcheck:
-      test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:9092"]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-
-  kafka_connect:
-    image: quay.io/debezium/connect:3.1
-    container_name: kafka_connect
-    restart: unless-stopped
-    depends_on:
-      kafka:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
-    ports:
-      - "127.0.0.1:8083:8083"
-      - "172.29.172.1:8083:8083"
-    environment:
-      BOOTSTRAP_SERVERS: kafka:29092
-      GROUP_ID: cdc_connect_group
-      CONFIG_STORAGE_TOPIC: cdc_connect_configs
-      OFFSET_STORAGE_TOPIC: cdc_connect_offsets
-      STATUS_STORAGE_TOPIC: cdc_connect_statuses
-      CONFIG_STORAGE_REPLICATION_FACTOR: 1
-      OFFSET_STORAGE_REPLICATION_FACTOR: 1
-      STATUS_STORAGE_REPLICATION_FACTOR: 1
-      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
-      KEY_CONVERTER_SCHEMAS_ENABLE: "false"
-      VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
-    networks:
-      - cdc_network
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8083/ || exit 1"]
-      interval: 15s
-      timeout: 10s
-      retries: 10
-
-  kafka_ui:
-    image: provectuslabs/kafka-ui:latest
-    container_name: kafka_ui
-    restart: unless-stopped
-    depends_on:
-      kafka:
-        condition: service_healthy
-    ports:
-      - "127.0.0.1:8080:8080"
-      - "172.29.172.1:8080:8080"
-    environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: debezium
-      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: http://kafka_connect:8083
-    networks:
-      - cdc_network
 
   clickhouse:
     image: clickhouse/clickhouse-server:26.1
