@@ -30,9 +30,8 @@
             <node kind="database" qname="dagster_db" />
             <node kind="database" qname="main">
               <node kind="schema">
-                <name qname="stg" />
                 <name qname="dds" />
-                <name qname="partman" />
+                <name qname="stg" />
               </node>
             </node>
           </node>
