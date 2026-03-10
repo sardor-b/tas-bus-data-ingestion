@@ -1,4 +1,4 @@
-create table dds.route_path
+create table dds.routes_path
 (
     route_id         uuid                       not null references dds.routes(id),
     origin_path      GEOMETRY(LineString, 4326) not null,

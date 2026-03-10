@@ -49,7 +49,7 @@ def op_ingest_bus_routes(context: OpExecutionContext) -> datetime:
 
 
 @op
-def op_load_route_id_name(context: OpExecutionContext, execution_time: datetime):
+def op_load_routes(context: OpExecutionContext, execution_time: datetime):
     """
     Loads route ID and name mappings into dds.route_id_name table.
 
@@ -84,7 +84,7 @@ def bus_routes_job():
     # First, ingest raw data from API and get execution timestamp
     execution_time = op_ingest_bus_routes()
 
-    op_load_route_id_name(execution_time)
+    load_routes(execution_time)
 
 
 # Runs every day at 02:00 AM GMT+5 (= 21:00 UTC)
