@@ -87,10 +87,10 @@ def bus_routes_job():
     op_load_routes(execution_time)
 
 
-# Runs every day at 02:00 AM GMT+5 (= 21:00 UTC)
+# Runs every day at 01:00 AM GMT+5 (= 20:00 UTC)
 bus_routes_schedule = ScheduleDefinition(
     job=bus_routes_job,
-    cron_schedule="0 21 * * *",
-    name="bus_routes_daily_2am_gmt5",
+    cron_schedule="0 20 * * *",
+    name="bus_routes_daily_1am_gmt5",
     execution_timezone="UTC",
 )
