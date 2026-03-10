@@ -32,6 +32,7 @@
               <node kind="schema">
                 <name qname="stg" />
                 <name qname="dds" />
+                <name qname="partman" />
               </node>
             </node>
           </node>

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="DataSourcePerFileMappings">
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_db_dagster_db.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
-    <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_function_cleanup_old_gps_partitions.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
-    <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_function_generate_hourly_gps_partitions.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_index_dds_routes_path.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_index_dds_stations.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_schema_dds.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
