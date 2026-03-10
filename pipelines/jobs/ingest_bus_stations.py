@@ -113,7 +113,7 @@ def bus_stations_job():
 
 
 # Runs every day at 03:00 AM GMT+5 (= 21:00 UTC)
-bus_routes_schedule = ScheduleDefinition(
+bus_stations_schedule = ScheduleDefinition(
     job=bus_stations_job,
     cron_schedule="0 22 * * *",
     name="bus_stations_daily_3am_gmt5",
