@@ -5609,8 +5609,8 @@ ANY</AvailableUpdates>
     </table>
     <table id="307" parent="301" name="routes_path">
       <DetailsLevel>2</DetailsLevel>
-      <ObjectId>18849</ObjectId>
-      <StateNumber>20213</StateNumber>
+      <ObjectId>18871</ObjectId>
+      <StateNumber>20478</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>db_user</OwnerName>
     </table>
@@ -16714,36 +16714,37 @@ ANY</AvailableUpdates>
     <column id="1194" parent="307" name="route_id">
       <NotNull>1</NotNull>
       <Position>1</Position>
-      <StateNumber>20213</StateNumber>
+      <StateNumber>20478</StateNumber>
       <StoredType>uuid|0s</StoredType>
       <TypeId>2950</TypeId>
     </column>
     <column id="1195" parent="307" name="origin_path">
       <NotNull>1</NotNull>
       <Position>2</Position>
-      <StateNumber>20213</StateNumber>
+      <StateNumber>20478</StateNumber>
       <StoredType>geometry(LineString,4326)|0v</StoredType>
       <TypeId>17436</TypeId>
     </column>
     <column id="1196" parent="307" name="destination_path">
       <NotNull>1</NotNull>
       <Position>3</Position>
-      <StateNumber>20213</StateNumber>
+      <StateNumber>20478</StateNumber>
       <StoredType>geometry(LineString,4326)|0v</StoredType>
       <TypeId>17436</TypeId>
     </column>
     <column id="1197" parent="307" name="create_dt">
+      <DefaultExpression>now()</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
-      <StateNumber>20213</StateNumber>
+      <StateNumber>20478</StateNumber>
       <StoredType>timestamp with time zone|0s</StoredType>
       <TypeId>1184</TypeId>
     </column>
     <foreign-key id="1198" parent="307" name="routes_path_route_id_fkey">
       <ColNames>route_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
-      <ObjectId>18858</ObjectId>
-      <StateNumber>20213</StateNumber>
+      <ObjectId>18881</ObjectId>
+      <StateNumber>20478</StateNumber>
       <RefKeyColPositions>1</RefKeyColPositions>
       <RefTableId>18815</RefTableId>
     </foreign-key>

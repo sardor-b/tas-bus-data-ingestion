@@ -1,6 +1,6 @@
 import logging
 
-from datetime import date, datetime
+from datetime import datetime
 from src.connectors import AsyncPostgresConnector
 
 logging.basicConfig(
@@ -113,6 +113,6 @@ async def load_routes(
 #     PASSWORD = os.getenv('PSQL_PASSWORD')
 #
 #     asyncio.run(
-#         load_route_id_name(dt=datetime.now(), host=HOST, port=PORT, database=DATABASE, user=USER,
+#         load_routes(dt=datetime.now(), host=HOST, port=PORT, database=DATABASE, user=USER,
 #                           password=PASSWORD)
 #     )

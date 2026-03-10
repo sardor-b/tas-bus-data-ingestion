@@ -51,12 +51,12 @@ def op_ingest_bus_routes(context: OpExecutionContext) -> datetime:
 @op
 def op_load_routes(context: OpExecutionContext, execution_time: datetime):
     """
-    Loads route ID and name mappings into dds.route_id_name table.
+    Loads route ID and name mappings into dds.routes table.
 
     Args:
         execution_time: Timestamp from the ingestion op
     """
-    context.log.info(f"Starting route_id_name table load for timestamp: {execution_time}")
+    context.log.info(f"Starting routes table load for timestamp: {execution_time}")
 
     asyncio.run(
         load_routes(
@@ -69,7 +69,7 @@ def op_load_routes(context: OpExecutionContext, execution_time: datetime):
         )
     )
 
-    context.log.info("route_id_name load completed successfully.")
+    context.log.info("routes load completed successfully.")
 
 
 @job
