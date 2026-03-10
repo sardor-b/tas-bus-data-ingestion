@@ -8,6 +8,7 @@
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_schema_dds.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_schema_stg.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_bus.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
+    <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_bus_movement.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_path.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_routes.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_stations.sql" value="9304ff0e-392e-46d7-943d-ed266287c24b" />

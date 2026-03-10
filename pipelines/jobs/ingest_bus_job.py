@@ -35,13 +35,13 @@ def op_load_bus(context: OpExecutionContext):
 
 
 @job
-def bus_load_job():
+def bus_job():
     op_load_bus()
 
 
 bus_schedule = ScheduleDefinition(
-    job=bus_load_job,  # Replace with your actual job
+    job=bus_job,
     cron_schedule="0 20 * * *",
-    name="your_job_1am_gmt5",
+    name="load_bus_info_at_1AM_GMT5",
     execution_timezone="UTC",
 )
