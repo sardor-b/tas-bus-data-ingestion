@@ -53,8 +53,7 @@ def op_truncate_stg_bus_gps_updates(context: OpExecutionContext, start_after: bo
 
 @job
 def bus_movement_job():
-    op_calc_bus_movement()
-    op_truncate_stg_bus_gps_updates()
+    op_calc_bus_movement() >> op_truncate_stg_bus_gps_updates()
 
 
 bus_movement_schedule = ScheduleDefinition(
