@@ -94,6 +94,6 @@ async def truncate_stg_bus_gps_updates(
         password=password
     )
 
-    await db.execute("TRUNCATE stg.bus_gps_updates;")
+    await db.execute("TRUNCATE stg.bus_gps_updates;", params={})
 
     logger.info("END stg.bus_gps_updates truncate")

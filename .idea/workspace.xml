@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pipelines/definitions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipelines/definitions.py" afterDir="false" />
-    </list>
+    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,6 +49,7 @@
     "Python.bus_gps_updates.executor": "Run",
     "Python.bus_routes.executor": "Run",
     "Python.bus_stations.executor": "Run",
+    "Python.definitions.executor": "Run",
     "Python.ingest_bus_routes.executor": "Run",
     "Python.load_bus.executor": "Run",
     "Python.load_bus_routes.executor": "Run",
@@ -139,7 +138,7 @@
       <workItem from="1773123514316" duration="17571000" />
       <workItem from="1773148633903" duration="4115000" />
       <workItem from="1773156040358" duration="412000" />
-      <workItem from="1773160882885" duration="15901000" />
+      <workItem from="1773160882885" duration="16247000" />
     </task>
     <servers />
   </component>
@@ -159,6 +158,7 @@
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$load_bus.coverage" NAME="load_bus Coverage Results" MODIFIED="1773169594524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dds_loader" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$postgres.coverage" NAME="postgres Coverage Results" MODIFIED="1772989583327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/connectors" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$load_bus_routes.coverage" NAME="load_bus_routes Coverage Results" MODIFIED="1773133686106" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dds_loader" />
+    <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$definitions.coverage" NAME="definitions Coverage Results" MODIFIED="1773178003355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pipelines" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$ingest_bus_routes.coverage" NAME="ingest_bus_routes Coverage Results" MODIFIED="1773044344933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pipelines/jobs" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$bus_gps_updates.coverage" NAME="bus_gps_updates Coverage Results" MODIFIED="1773147760935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/api_loader" />
     <SUITE FILE_PATH="coverage/tas_bus_data_ingestion$load_bus_stations.coverage" NAME="load_bus_stations Coverage Results" MODIFIED="1773133690091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/dds_loader" />
