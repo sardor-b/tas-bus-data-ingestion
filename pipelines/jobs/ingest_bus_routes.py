@@ -84,7 +84,7 @@ def bus_routes_job():
     # First, ingest raw data from API and get execution timestamp
     execution_time = op_ingest_bus_routes()
 
-    load_routes(execution_time)
+    op_load_routes(execution_time)
 
 
 # Runs every day at 02:00 AM GMT+5 (= 21:00 UTC)
