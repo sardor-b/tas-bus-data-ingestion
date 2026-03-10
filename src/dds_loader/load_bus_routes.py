@@ -15,7 +15,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-async def load_route_id_name(
+async def load_routes(
     dt: datetime,
     host: str,
     port: str,
@@ -33,154 +33,28 @@ async def load_route_id_name(
         password=password
     )
 
-    before = await db.fetch('SELECT count(route_id) FROM dds.route_id_name;')
+    before = await db.fetch('SELECT count(route_id) FROM dds.routes;')
 
     await db.execute(
         query="""
-            insert into dds.route_id_name (route_id, route_name)
-            select
-                (t.value ->> 'id')::int as route_id,
-                t.value ->> 'name' as route_name
-            from
-                (
-                select
-                    jsonb_array_elements(v.object_value) as value
-                from (
-                    select
-                        object_value
-                    from stg.bus_routes
-                    where update_dt::date = current_date
-                    order by update_dt desc
-                    limit 1
-                     ) v
-                 ) as t
-            where
-                (t.value ->> 'id')::int != 0
-            on conflict (route_id)
-                do update set 
-                    update_dt = now(),
-                    route_name = excluded.route_name
-            ;
-        """,
-        params={
-            'date': dt
-        }
-    )
-
-    after = await db.fetch('SELECT count(route_id) FROM dds.route_id_name;')
-
-    logger.info(f"END dds.route_id_name load. Loaded {after[0]['count'] - before[0]['count']} records.")
-
-
-async def load_route_origin_destination(
-    dt: datetime,
-    host: str,
-    port: str,
-    database: str,
-    user: str,
-    password: str,
-):
-    logger.info("START dds.route_origin_destination load")
-
-    db = AsyncPostgresConnector(
-        host=host,
-        port=port,
-        db=database,
-        user=user,
-        password=password
-    )
-
-    before = await db.fetch('SELECT count(route_id) FROM dds.route_origin_destination;')
-
-    await db.execute(
-        query="""
-            insert into dds.route_origin_destination (route_id, origin_name_uz, origin_name_ru, destination_name_uz, destination_name_ru, create_dt, update_dt)
-            select
-                rin.id as route_id,
-                t.value ->> 'uzNameA' as origin_name_uz,
-                t.value ->> 'nameA' as origin_name_ru,
-                t.value ->> 'uzNameB' as destination_name_uz,
-                t.value ->> 'nameB' as destination_name_ru,
-                NOW() AS create_dt,
-                NOW() AS update_dt
-            from
-                (
-                select
-                    jsonb_array_elements(v.object_value) as value
-                from (
-                    select
-                        object_value
-                    from stg.bus_routes
-                    where update_dt::date = current_date
-                    order by update_dt desc
-                    limit 1
-                     ) v
-                 ) as t
-            inner join dds.route_id_name rin
-                on rin.route_id = (t.value ->> 'id')::int
-            left join lateral (
-                select
-                    route_id,
-                    origin_name_uz,
-                    origin_name_ru,
-                    destination_name_uz,
-                    destination_name_ru
-                from dds.route_origin_destination
-                where route_id = rin.id
-                order by create_dt desc
-                limit 1
-            ) rf on true
-            where
-                (t.value ->> 'id')::int != 0
-                and (
-                    rf.route_id IS NULL  -- New route
-                    or (t.value ->> 'uzNameA') != rf.origin_name_uz
-                    or (t.value ->> 'nameA') != rf.origin_name_ru
-                    or (t.value ->> 'uzNameB') != rf.destination_name_uz
-                    or (t.value ->> 'nameB') != rf.destination_name_ru
-                )
-            ;
-        """,
-        params={
-            'date': dt
-        }
-    )
-
-    after = await db.fetch('SELECT count(route_id) FROM dds.route_origin_destination;')
-
-    logger.info(f"END dds.route_origin_destination load. Loaded {after[0]['count'] - before[0]['count']} records.")
-
-
-async def load_route_fleet(
-    dt: datetime,
-    host: str,
-    port: str,
-    database: str,
-    user: str,
-    password: str,
-):
-    logger.info("START dds.route_fleet load")
-
-    db = AsyncPostgresConnector(
-        host=host,
-        port=port,
-        db=database,
-        user=user,
-        password=password
-    )
-
-    before = await db.fetch('SELECT count(route_id) FROM dds.route_fleet;')
-
-    await db.execute(
-        query="""
-            INSERT INTO dds.route_fleet (route_id, bus_type, fleet_size, create_dt, update_dt)
+            INSERT INTO dds.routes (
+                route_id, route_name, bus_type, fleet_size, start_time,
+                end_time, origin_name_uz, destination_name_uz,
+                origin_name_ru, destination_name_ru, create_dt
+            )
             SELECT
-                rin.id AS route_id,
+                (t.value ->> 'id')::int AS route_id,
+                t.value ->> 'name' AS route_name,
                 COALESCE(t.value ->> 'busType', 'None') AS bus_type,
                 (t.value ->> 'busSize')::int AS fleet_size,
-                NOW() AS create_dt,
-                NOW() AS update_dt
-            FROM 
+                (t.value ->> 'startTime')::time AS start_time,
+                (t.value ->> 'endTime')::time AS end_time,
+                t.value ->> 'uzNameA' AS origin_name_uz,
+                t.value ->> 'uzNameB' AS destination_name_uz, -- Fixed order
+                t.value ->> 'nameA' AS origin_name_ru,       -- Fixed order
+                t.value ->> 'nameB' AS destination_name_ru,   -- Fixed order
+                NOW() AS create_dt
+            FROM
                 (
                 select
                     jsonb_array_elements(v.object_value) as value
@@ -188,113 +62,41 @@ async def load_route_fleet(
                     select
                         object_value
                     from stg.bus_routes
-                    where update_dt::date = current_date
+                    where update_dt::date = (%(date)s)::date
                     order by update_dt desc
                     limit 1
                      ) v
                  ) as t
-            INNER JOIN dds.route_id_name rin
-                ON rin.route_id = (t.value ->> 'id')::int
             LEFT JOIN LATERAL (
-                SELECT
-                    route_id,
-                    bus_type,
-                    fleet_size
-                FROM dds.route_fleet
-                WHERE route_id = rin.id
+                SELECT *
+                FROM dds.routes
+                WHERE route_id = (t.value ->> 'id')::int
                 ORDER BY create_dt DESC
                 LIMIT 1
-            ) rf ON true
+            ) rf ON TRUE
             WHERE
                 (t.value ->> 'id')::int != 0
                 AND (
-                    rf.route_id IS NULL -- Check if no previous record exists
-                    OR COALESCE(t.value ->> 'busType', 'None') != rf.bus_type
-                    OR (t.value ->> 'busSize')::int != rf.fleet_size
-                )
-            ;
+                    rf.route_id IS NULL -- Record doesn't exist (New)
+                    OR t.value ->> 'name' IS DISTINCT FROM rf.route_name
+                    OR COALESCE(t.value ->> 'busType', 'None') IS DISTINCT FROM rf.bus_type
+                    OR (t.value ->> 'busSize')::int IS DISTINCT FROM rf.fleet_size
+                    OR (t.value ->> 'startTime')::time IS DISTINCT FROM rf.start_time
+                    OR (t.value ->> 'endTime')::time IS DISTINCT FROM rf.end_time
+                    OR t.value ->> 'uzNameA' IS DISTINCT FROM rf.origin_name_uz
+                    OR t.value ->> 'uzNameB' IS DISTINCT FROM rf.destination_name_uz
+                    OR t.value ->> 'nameA' IS DISTINCT FROM rf.origin_name_ru
+                    OR t.value ->> 'nameB' IS DISTINCT FROM rf.destination_name_ru
+                );
         """,
         params={
             'date': dt
         }
     )
 
-    after = await db.fetch('SELECT count(route_id) FROM dds.route_fleet;')
+    after = await db.fetch('SELECT count(route_id) FROM dds.routes;')
 
-    logger.info(f"END dds.route_fleet load. Loaded {after[0]['count'] - before[0]['count']} records.")
-
-
-async def load_route_start_end_time(
-    dt: datetime,
-    host: str,
-    port: str,
-    database: str,
-    user: str,
-    password: str,
-):
-    logger.info("START dds.route_start_end_time load")
-
-    db = AsyncPostgresConnector(
-        host=host,
-        port=port,
-        db=database,
-        user=user,
-        password=password
-    )
-
-    before = await db.fetch('SELECT count(route_id) FROM dds.route_start_end_time;')
-
-    await db.execute(
-        query="""
-            INSERT INTO dds.route_start_end_time (route_id, start_time, end_time, create_dt, update_dt)
-            SELECT
-                rin.id AS route_id,
-                (t.value ->> 'startTime')::time as start_time,
-                (t.value ->> 'endTime')::time as end_time,
-                NOW() AS create_dt,
-                NOW() AS update_dt
-            FROM 
-                (
-                select
-                    jsonb_array_elements(v.object_value) as value
-                from (
-                    select
-                        object_value
-                    from stg.bus_routes
-                    where update_dt::date = current_date
-                    order by update_dt desc
-                    limit 1
-                     ) v
-                 ) as t
-            INNER JOIN dds.route_id_name rin
-                ON rin.route_id = (t.value ->> 'id')::int
-            LEFT JOIN LATERAL (
-                SELECT
-                    route_id,
-                    start_time,
-                    end_time
-                FROM dds.route_start_end_time
-                WHERE route_id = rin.id
-                ORDER BY create_dt DESC
-                LIMIT 1
-            ) rf ON true
-            WHERE
-                (t.value ->> 'id')::int != 0
-                AND (
-                    rf.route_id IS NULL -- Check if no previous record exists
-                    OR (t.value ->> 'startTime')::time != rf.start_time
-                    OR (t.value ->> 'endTime')::time != rf.end_time
-                )
-            ;
-        """,
-        params={
-            'date': dt
-        }
-    )
-
-    after = await db.fetch('SELECT count(route_id) FROM dds.route_start_end_time;')
-
-    logger.info(f"END dds.route_start_end_time load. Loaded {after[0]['count'] - before[0]['count']} records.")
+    logger.info(f"END dds.routes load. Loaded {after[0]['count'] - before[0]['count']} records.")
 
 
 # TODO: remove

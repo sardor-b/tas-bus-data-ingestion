@@ -4,12 +4,7 @@ import logging
 
 from datetime import datetime
 from src.api_loader.bus_routes import ingest_bus_routes
-from src.dds_loader.load_bus_routes import (
-    load_route_id_name,
-    load_route_origin_destination,
-    load_route_fleet,
-    load_route_start_end_time
-)
+from src.dds_loader.load_bus_routes import load_routes
 from dagster import op, job, OpExecutionContext, ScheduleDefinition
 
 logger = logging.getLogger(__name__)
@@ -64,7 +59,7 @@ def op_load_route_id_name(context: OpExecutionContext, execution_time: datetime)
     context.log.info(f"Starting route_id_name table load for timestamp: {execution_time}")
 
     asyncio.run(
-        load_route_id_name(
+        load_routes(
             dt=execution_time,
             host=host,
             port=port,
@@ -76,101 +71,20 @@ def op_load_route_id_name(context: OpExecutionContext, execution_time: datetime)
 
     context.log.info("route_id_name load completed successfully.")
 
-    return execution_time
-
-
-@op
-def op_load_route_origin_destination(context: OpExecutionContext, execution_time: datetime):
-    """
-    Loads route origin and destination data into dds.route_origin_destination table.
-
-    Args:
-        execution_time: Timestamp from the ingestion op
-    """
-    context.log.info(f"Starting route_origin_destination table load for timestamp: {execution_time}")
-
-    asyncio.run(
-        load_route_origin_destination(
-            dt=execution_time,
-            host=host,
-            port=port,
-            database=database,
-            user=user,
-            password=password
-        )
-    )
-
-    context.log.info("route_origin_destination load completed successfully.")
-
-
-@op
-def op_load_route_fleet(context: OpExecutionContext, execution_time: datetime):
-    """
-    Loads route fleet information into dds.route_fleet table.
-
-    Args:
-        execution_time: Timestamp from the ingestion op
-    """
-    context.log.info(f"Starting route_fleet table load for timestamp: {execution_time}")
-
-    asyncio.run(
-        load_route_fleet(
-            dt=execution_time,
-            host=host,
-            port=port,
-            database=database,
-            user=user,
-            password=password
-        )
-    )
-
-    context.log.info("route_fleet load completed successfully.")
-
-
-@op
-def op_load_route_start_end_time(context: OpExecutionContext, execution_time: datetime):
-    """
-    Loads route start and end times into dds.route_start_end_time table.
-
-    Args:
-        execution_time: Timestamp from the ingestion op
-    """
-    context.log.info(f"Starting route_start_end_time table load for timestamp: {execution_time}")
-
-    asyncio.run(
-        load_route_start_end_time(
-            dt=execution_time,
-            host=host,
-            port=port,
-            database=database,
-            user=user,
-            password=password
-        )
-    )
-
-    context.log.info("route_start_end_time load completed successfully.")
-
 
 @job
 def bus_routes_job():
     """
     ETL job that:
     1. Ingests bus routes from API to staging
-    2. Loads route_id_name mappings
-    3. Loads route origin/destination data
-    4. Loads route fleet information
-    5. Loads route start/end times
+    2. Loads dds.routes
 
     All transformation steps use the same execution timestamp for data consistency.
     """
     # First, ingest raw data from API and get execution timestamp
     execution_time = op_ingest_bus_routes()
 
-    execution_time_after_ingestion = op_load_route_id_name(execution_time)
-
-    op_load_route_origin_destination(execution_time_after_ingestion)
-    op_load_route_fleet(execution_time_after_ingestion)
-    op_load_route_start_end_time(execution_time_after_ingestion)
+    op_load_route_id_name(execution_time)
 
 
 # Runs every day at 02:00 AM GMT+5 (= 21:00 UTC)
