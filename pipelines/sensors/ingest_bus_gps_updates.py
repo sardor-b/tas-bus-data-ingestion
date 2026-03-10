@@ -6,7 +6,7 @@ from dagster import sensor, SensorEvaluationContext
 from src.api_loader.bus_gps_updates import ingest_bus_gps_updates
 
 source = os.environ["SOURCE"]
-source_url = os.environ["SOURCE_BUS_ROUTES"]
+source_url = os.environ["SOURCE_BUS_GPS_UPDATES"]
 host = os.environ.get("PSQL_HOST", "172.29.172.1")
 port = os.environ.get("PSQL_PORT", "5432")
 database = os.environ.get("PSQL_DATABASE", "main")
