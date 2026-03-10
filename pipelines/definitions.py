@@ -9,6 +9,6 @@ defs = Definitions(
     ],
     schedules=[
         bus_routes_schedule,
-        bus_stations_job
+        bus_stations_schedule
     ]
 )

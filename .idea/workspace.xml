@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipelines/definitions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipelines/definitions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_stations.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_stations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_path.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_route_path.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dds_loader/load_bus_routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dds_loader/load_bus_routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dds_loader/load_bus_stations.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/dds_loader/load_bus_stations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dds_loader/logs/bus_routes.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/dds_loader/logs/bus_routes.log" afterDir="false" />
-    </list>
+    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -140,7 +130,7 @@
       <workItem from="1772951040814" duration="2888000" />
       <workItem from="1772983964560" duration="42365000" />
       <workItem from="1773077119268" duration="3110000" />
-      <workItem from="1773123514316" duration="9458000" />
+      <workItem from="1773123514316" duration="9839000" />
     </task>
     <servers />
   </component>
