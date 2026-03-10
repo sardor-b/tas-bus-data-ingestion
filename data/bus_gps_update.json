@@ -127,8 +127,6 @@
             "gar": "5-131",
             "busId": 179,
             "type": "NOTETHER",
-            "busDate": 1772979249000,
-            "apiCreatedDate": 1772961277180,
             "nowRoute": "1",
             "routeId": 1,
             "outerRoute": "1",
@@ -145,45 +143,8 @@
         "direction": 0,
         "course": 235,
         "latencyCounter": 0,
-        "nextStation": {
-            "id": 18083,
-            "stationId": 5444,
-            "distance": "8931.937920918865",
-            "name": "Улица Миришкор",
-            "uzName": "Mirishkor ko'chasi",
-            "lx": "69.34622883796692",
-            "ly": "41.32942105771208",
-            "direction": 1,
-            "rawDistance": 8931.937920918865
-        },
-        "stringDirection": "ЦУМ Ташкент",
-        "distation": 8857.797367840176,
         "strTime": "96 мин",
         "strDist": "",
-        "distationToStation": 28246.129418483215,
-        "firstRanges": [
-            8370.91491850212,
-            8389.061484160273,
-            8486.886624292842,
-            8691.955970739104,
-            8776.288479274604,
-            8857.797367840176
-        ],
-        "secondRanges": [
-            8923.380118100999,
-            8905.774980253256,
-            8807.305627813783,
-            8601.139078967874,
-            8516.724533625911,
-            8436.706519862451
-        ],
-        "firstDirections": [
-            0,
-            0,
-            0,
-            0,
-            0
-        ],
         "qDirection": 0,
         "latency": false
     },
