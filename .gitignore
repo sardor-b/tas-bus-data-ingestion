@@ -2,3 +2,4 @@
 ssh-tunnel.sh
 /ssh.sh
 /src/api_loader/logs/bus_routes.log
+/src/api_loader/logs/bus_stations.log
