@@ -1,9 +1,18 @@
+from pathlib import Path
 from dagster import Definitions
 from pipelines.jobs.ingest_bus_job import bus_job, bus_schedule
 from pipelines.jobs.ingest_bus_routes import bus_routes_job, bus_routes_schedule
 from pipelines.jobs.ingest_bus_stations import bus_stations_job, bus_stations_schedule
 from pipelines.jobs.calculate_bus_movement import bus_movement_job, bus_movement_schedule
 from pipelines.sensors.ingest_bus_gps_updates import gps_streaming_sensor, gps_ingestion_job
+
+parent_dir = Path(__file__).parent.parent
+logs_dir = parent_dir / "logs"
+
+# Create logs directory if it doesn't exist
+logs_dir.mkdir(exist_ok=True)
+
+print(f"Logs directory created/verified at: {logs_dir}")
 
 defs = Definitions(
     jobs=[
