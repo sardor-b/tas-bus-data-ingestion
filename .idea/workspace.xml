@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pipelines/jobs/ingest_bus_gps_updates.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_cron_create_cleanup_partitions.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_function_cleanup_old_gps_partitions.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_function_generate_hourly_gps_partitions.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_index_dds_routes_path.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_index_dds_stations.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/bus_gps_update.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/bus_gps_update.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_stations.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_stations.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_stg_bus_gps_updates.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_stg_bus_gps_updates.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api_loader/bus_gps_updates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/api_loader/bus_gps_updates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipelines/definitions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipelines/definitions.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +133,7 @@
       <workItem from="1772951040814" duration="2888000" />
       <workItem from="1772983964560" duration="42365000" />
       <workItem from="1773077119268" duration="3110000" />
-      <workItem from="1773123514316" duration="15555000" />
+      <workItem from="1773123514316" duration="15907000" />
     </task>
     <servers />
   </component>

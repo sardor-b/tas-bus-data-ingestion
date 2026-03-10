@@ -1,7 +1,8 @@
 import os
 import asyncio
 
-from dagster import sensor, SensorEvaluationContext, RunRequest, repository
+from dagster import job
+from dagster import sensor, SensorEvaluationContext
 from src.api_loader.bus_gps_updates import ingest_bus_gps_updates
 
 source = os.environ["SOURCE"]
@@ -12,7 +13,13 @@ database = os.environ.get("PSQL_DATABASE", "main")
 user = os.environ["PSQL_USER"]
 password = os.environ["PSQL_PASSWORD"]
 
-@sensor(job_name="my_gps_ingestion_job")
+@job
+def gps_ingestion_job():
+    # If you just want the sensor to do the work,
+    # this job can even be empty or contain a 'pass' op.
+    pass
+
+@sensor(job=gps_ingestion_job, minimum_interval_seconds=5)
 def gps_streaming_sensor(context: SensorEvaluationContext):
     """
     This sensor acts as a persistent 'daemon' process.
