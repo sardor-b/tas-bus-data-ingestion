@@ -1,5 +1,5 @@
 [Unit]
-Description=My Python Script Service
+Description=Bus GPS API loader service
 After=network.target
 
 [Service]
