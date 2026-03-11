@@ -46,8 +46,6 @@ async def load_bus_movement(
                     update_dt,
                     jsonb_array_elements(object_value) as v
                 from stg.bus_gps_updates
-                where
-                    update_dt::date = (%(date)s)::date
             )
             select
                 v #>> '{bus, id}' as bus_hash_id,
@@ -70,9 +68,7 @@ async def load_bus_movement(
             from bus_gps_updates
             ;
         """,
-        params={
-            'date': dt
-        }
+        params={}
     )
 
     after = await db.fetch('SELECT count(movement_id) FROM dds.bus_movement;')

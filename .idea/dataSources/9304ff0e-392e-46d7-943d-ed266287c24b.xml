@@ -5617,6 +5617,7 @@ ANY</AvailableUpdates>
     <table id="309" parent="299" name="routes">
       <DetailsLevel>2</DetailsLevel>
       <ObjectId>18815</ObjectId>
+      <Outdated>1</Outdated>
       <StateNumber>20205</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>db_user</OwnerName>
