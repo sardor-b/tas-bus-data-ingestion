@@ -1,0 +1,17 @@
+[Unit]
+Description=My Python Script Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/root/tas-bus-data-ingestion
+ExecStart=/root/tas-bus-data-ingestion/.venv/bin/python3 /root/tas-bus-data-ingestion/src/api_loader/bus_gps_updates.py
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=bus-gps-upd
+
+[Install]
+WantedBy=multi-user.target

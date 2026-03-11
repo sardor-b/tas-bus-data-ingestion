@@ -1,0 +1,16 @@
+[Unit]
+Description=Run bus-gps-update Script Every 10 Seconds
+Requires=bus-gps-upd.service
+
+[Timer]
+# Run 10 seconds after boot
+OnBootSec=10s
+
+# Run every 10 seconds after the service completes
+OnUnitActiveSec=10s
+
+# Ensure timer runs even if system was off during scheduled time
+Persistent=false
+
+[Install]
+WantedBy=timers.target

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="" />
+    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/scheduler/bus-gps-upd.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheduler/bus-gps-upd.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,7 +66,7 @@
     "SHELLCHECK.PATH": "/Users/sardorb/Library/Application Support/JetBrains/PyCharm2025.3/plugins/Shell Script/shellcheck",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/sardorb/Documents/tas-bus-data-ingestion/src/dds_loader",
+    "last_opened_file_path": "/Users/sardorb/Documents/tas-bus-data-ingestion/scheduler",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   },
   "keyToStringList": {
@@ -138,7 +142,10 @@
       <workItem from="1773123514316" duration="17571000" />
       <workItem from="1773148633903" duration="4115000" />
       <workItem from="1773156040358" duration="412000" />
-      <workItem from="1773160882885" duration="16247000" />
+      <workItem from="1773160882885" duration="16850000" />
+      <workItem from="1773201052925" duration="338000" />
+      <workItem from="1773201402245" duration="30000" />
+      <workItem from="1773209837214" duration="655000" />
     </task>
     <servers />
   </component>
