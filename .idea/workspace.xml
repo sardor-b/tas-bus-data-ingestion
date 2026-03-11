@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,6 +71,7 @@
       "clickhouse"
     ],
     "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "TEXT",
       "PostgreSQL"
     ]
   }
@@ -144,9 +143,12 @@
       <workItem from="1773160882885" duration="16850000" />
       <workItem from="1773201052925" duration="338000" />
       <workItem from="1773201402245" duration="30000" />
-      <workItem from="1773209837214" duration="964000" />
+      <workItem from="1773209837214" duration="1310000" />
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.timer" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

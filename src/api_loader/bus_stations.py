@@ -91,24 +91,3 @@ async def ingest_bus_stations(
     )
 
     logger.info("END bus station ingestion")
-
-
-# # TODO: remove
-# if __name__ == '__main__':
-#     import os
-#     from dotenv import load_dotenv
-#     load_dotenv(dotenv_path="../../.env")
-#
-#     SOURCE = os.getenv('SOURCE')
-#     SOURCE_URL = os.getenv('SOURCE_BUS_STATIONS')
-#
-#     HOST = '172.29.172.1'
-#     PORT = 5432
-#     DATABASE = 'main'
-#     USER = os.getenv('PSQL_USER')
-#     PASSWORD = os.getenv('PSQL_PASSWORD')
-#
-#     asyncio.run(
-#         ingest_bus_stations(source=SOURCE, source_url=SOURCE_URL, host=HOST, port=PORT, database=DATABASE, user=USER,
-#                           password=PASSWORD)
-#     )

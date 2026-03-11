@@ -72,3 +72,29 @@ async def ingest_bus_gps_updates(
                         await copy.write_row((source, json.dumps(obj)))
 
     logger.info("END bus gps update ingestion")
+
+
+if __name__ == '__main__':
+    import os
+    from dotenv import load_dotenv
+    load_dotenv(dotenv_path="../../.env")
+
+    SOURCE = os.getenv('SOURCE')
+    SOURCE_URL = os.getenv('SOURCE_BUS_GPS_UPDATES')
+
+    HOST = os.getenv('PSQL_HOST', '172.29.172.1')
+    PORT = 5432
+    DATABASE = os.getenv('PSQL_DB')
+    USER = os.getenv('PSQL_USER')
+    PASSWORD = os.getenv('PSQL_PASSWORD')
+
+    asyncio.run(
+        ingest_bus_gps_updates(
+            source=SOURCE,
+            source_url=SOURCE_URL,
+            host=HOST, port=PORT,
+            database=DATABASE,
+            user=USER,
+            password=PASSWORD
+        )
+    )
