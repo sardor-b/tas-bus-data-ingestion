@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/scheduler/bus-gps-upd.service" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheduler/bus-gps-upd.timer" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,6 +79,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scheduler" />
       <recent name="$PROJECT_DIR$/src/dds_loader" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/config" />
@@ -145,7 +144,7 @@
       <workItem from="1773160882885" duration="16850000" />
       <workItem from="1773201052925" duration="338000" />
       <workItem from="1773201402245" duration="30000" />
-      <workItem from="1773209837214" duration="655000" />
+      <workItem from="1773209837214" duration="964000" />
     </task>
     <servers />
   </component>

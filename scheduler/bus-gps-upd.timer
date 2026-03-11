@@ -1,16 +1,16 @@
 [Unit]
-Description=Run bus-gps-update Script Every 10 Seconds
+Description=Run Bus GPS API Loader Every 10 Seconds (Calendar-based)
 Requires=bus-gps-upd.service
 
 [Timer]
-# Run 10 seconds after boot
-OnBootSec=10s
+# Run at 0, 10, 20, 30, 40, 50 seconds of each minute
+OnCalendar=*:*:0,10,20,30,40,50
 
-# Run every 10 seconds after the service completes
-OnUnitActiveSec=10s
+# Make timing as accurate as possible
+AccuracySec=1us
 
-# Ensure timer runs even if system was off during scheduled time
-Persistent=false
+# Run immediately if we missed a scheduled time
+Persistent=true
 
 [Install]
 WantedBy=timers.target
