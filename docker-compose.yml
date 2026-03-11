@@ -31,32 +31,32 @@ services:
       timeout: 5s
       retries: 5
 
-  clickhouse:
-    image: clickhouse/clickhouse-server:26.1
-    container_name: clickhouse
-    restart: unless-stopped
-    ports:
-      - "127.0.0.1:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
-      - "127.0.0.1:9000:9000"   # Native TCP interface
-      - "172.29.172.1:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
-      - "172.29.172.1:9000:9000"   # Native TCP interface
-    environment:
-      CLICKHOUSE_USER: "${CH_USER}"
-      CLICKHOUSE_PASSWORD: "${CH_PASSWORD}"
-    volumes:
-      - clickhouse_data:/var/lib/clickhouse
-      - clickhouse_logs:/var/log/clickhouse-server
-    ulimits:
-      nofile:
-        soft: 262144
-        hard: 262144
-    networks:
-      - cdc_network
-    healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+#  clickhouse:
+#    image: clickhouse/clickhouse-server:26.1
+#    container_name: clickhouse
+#    restart: unless-stopped
+#    ports:
+#      - "127.0.0.1:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
+#      - "127.0.0.1:9000:9000"   # Native TCP interface
+#      - "172.29.172.1:8123:8123"   # HTTP interface (used by Python consumer, dbt, Grafana)
+#      - "172.29.172.1:9000:9000"   # Native TCP interface
+#    environment:
+#      CLICKHOUSE_USER: "${CH_USER}"
+#      CLICKHOUSE_PASSWORD: "${CH_PASSWORD}"
+#    volumes:
+#      - clickhouse_data:/var/lib/clickhouse
+#      - clickhouse_logs:/var/log/clickhouse-server
+#    ulimits:
+#      nofile:
+#        soft: 262144
+#        hard: 262144
+#    networks:
+#      - cdc_network
+#    healthcheck:
+#      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
 
   grafana:
     image: grafana/grafana:12.1.0
