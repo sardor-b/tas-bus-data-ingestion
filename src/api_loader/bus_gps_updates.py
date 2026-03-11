@@ -56,6 +56,8 @@ async def ingest_bus_gps_updates(
 
         request_urls = [f"{source_url}{idx['route_id']}" for idx in bus_routes]
 
+        logger.info("START API load")
+
         connector = aiohttp.TCPConnector(limit=SEMAPHORE_LIMIT)
         async with aiohttp.ClientSession(connector=connector) as session:
             tasks = [
@@ -63,6 +65,8 @@ async def ingest_bus_gps_updates(
                 for url in request_urls
             ]
             responses = await asyncio.gather(*tasks)
+
+        logger.info("END API load")
 
         # COPY is much faster than executemany for bulk inserts
         valid_responses = [obj for obj in responses if obj is not None]
