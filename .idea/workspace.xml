@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="618e63f1-2704-4eef-8e93-e6e62116a20c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_bus_movement.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_dds_bus_movement.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api_loader/bus_gps_updates.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/api_loader/bus_gps_updates.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9304ff0e-392e-46d7-943d-ed266287c24b.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_stg_bus_gps_updates.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/OLTP/DDL/DDL_table_stg_bus_gps_updates.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +146,7 @@
       <workItem from="1773160882885" duration="16850000" />
       <workItem from="1773201052925" duration="338000" />
       <workItem from="1773201402245" duration="30000" />
-      <workItem from="1773209837214" duration="2255000" />
+      <workItem from="1773209837214" duration="2558000" />
     </task>
     <servers />
   </component>
