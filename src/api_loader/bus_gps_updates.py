@@ -1,8 +1,11 @@
+import os
 import json
 import logging
 import aiohttp
 import asyncio
 import psycopg
+import platform
+from dotenv import load_dotenv
 from psycopg.rows import dict_row
 
 logging.basicConfig(
@@ -75,9 +78,11 @@ async def ingest_bus_gps_updates(
 
 
 if __name__ == '__main__':
-    import os
-    from dotenv import load_dotenv
-    load_dotenv(dotenv_path="../../.env")
+    system = platform.system()
+    if system == 'Linux':
+        load_dotenv(dotenv_path=".env")
+    else:
+        load_dotenv(dotenv_path='../../.env')
 
     SOURCE = os.getenv('SOURCE')
     SOURCE_URL = os.getenv('SOURCE_BUS_GPS_UPDATES')
