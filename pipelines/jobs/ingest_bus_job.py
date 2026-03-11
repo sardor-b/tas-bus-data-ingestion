@@ -6,6 +6,7 @@ from datetime import datetime
 from src.dds_loader.load_bus import load_bus
 from dagster import op, job, OpExecutionContext, ScheduleDefinition
 
+os.makedirs("logs", exist_ok=True)
 logger = logging.getLogger(__name__)
 
 source = os.environ["SOURCE"]

@@ -1,9 +1,12 @@
+import os
 import json
 import logging
 import aiohttp
 import asyncio
 
 from src.connectors import AsyncPostgresConnector
+
+os.makedirs("logs", exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,

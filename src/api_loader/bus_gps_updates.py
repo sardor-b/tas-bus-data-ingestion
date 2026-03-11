@@ -8,6 +8,8 @@ import platform
 from dotenv import load_dotenv
 from psycopg.rows import dict_row
 
+os.makedirs("logs", exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

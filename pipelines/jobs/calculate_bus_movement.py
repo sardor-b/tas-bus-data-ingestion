@@ -6,6 +6,8 @@ from datetime import datetime
 from dagster import op, job, OpExecutionContext, ScheduleDefinition
 from src.dds_loader.load_bus_movement import load_bus_movement, truncate_stg_bus_gps_updates
 
+os.makedirs("logs", exist_ok=True)
+
 logger = logging.getLogger(__name__)
 
 source = os.environ["SOURCE"]

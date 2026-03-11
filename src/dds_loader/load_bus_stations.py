@@ -1,7 +1,10 @@
+import os
 import logging
 
 from datetime import datetime
 from src.connectors import AsyncPostgresConnector
+
+os.makedirs("logs", exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,

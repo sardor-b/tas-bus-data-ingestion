@@ -7,6 +7,7 @@ from src.api_loader.bus_stations import ingest_bus_stations
 from src.dds_loader.load_bus_stations import load_stations, load_route_path
 from dagster import op, job, OpExecutionContext, ScheduleDefinition
 
+os.makedirs("logs", exist_ok=True)
 logger = logging.getLogger(__name__)
 
 source = os.environ["SOURCE"]
