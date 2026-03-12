@@ -90,6 +90,7 @@ def ingest_bus_job():
     load_s_bus_license_plate(wait=action_1)
     load_s_bus_model(wait=action_1)
     load_s_bus_movement(wait=action_1)
+    load_s_bus_garage_number(wait=action_1)
 
 
 bus_schedule = ScheduleDefinition(
