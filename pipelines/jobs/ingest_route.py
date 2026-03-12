@@ -115,7 +115,7 @@ def ingest_route_job():
 
 bus_routes_schedule = ScheduleDefinition(
     job=ingest_route_job,
-    cron_schedule="0 1 * * *",  # 01:00 AM
+    cron_schedule="15 1 * * *",  # 01:15 AM
     name="ingest_routes_daily_local",
     execution_timezone="Asia/Tashkent", # GMT+5 timezone
 )
