@@ -62,9 +62,10 @@ def op_truncate_stg_bus_gps_updates(context: OpExecutionContext, wait):
 
 @job
 def load_links_job():
-    action_1 = load_l_route_bus(), load_l_route_station()
+    action_1 = load_l_route_bus()
+    action_2 = load_l_route_station()
 
-    op_truncate_stg_bus_gps_updates(action_1)
+    op_truncate_stg_bus_gps_updates(wait=[action_1, action_2])
 
 
 load_links_schedule = ScheduleDefinition(
