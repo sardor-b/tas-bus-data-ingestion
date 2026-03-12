@@ -1,7 +1,6 @@
 import os
 import asyncio
 import logging
-from asyncio import wait_for
 
 from src.api_loader.bus_stations import ingest_bus_stations
 from dagster import op, job, OpExecutionContext, ScheduleDefinition
@@ -64,7 +63,7 @@ def load_s_station_location(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_station_name(context: OpExecutionContext, wait_for_for):
+def load_s_station_name(context: OpExecutionContext, wait_for):
     asyncio.run(
         s_station_name(
             host=host,
