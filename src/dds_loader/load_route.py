@@ -97,14 +97,13 @@ async def s_route_schedule(
                 MD5((src.value ->> 'id')::TEXT) AS hk_route,
             
                 (src.value ->> 'startTime')::TIME AS start_time,
-                (src.value ->> 'endTime')::TIME AS end_time,
+                (src.value ->> 'endTime')::TIME   AS end_time,
             
                 NOW() AS load_dt,
                 'stg.bus_routes' AS load_source,
                 MD5(
                     CONCAT_WS(
                         '||',
-                        (src.value ->> 'id')::TEXT,
                         (src.value ->> 'startTime')::TIME::TEXT,
                         (src.value ->> 'endTime')::TIME::TEXT
                     )
@@ -112,27 +111,25 @@ async def s_route_schedule(
             FROM (
                 SELECT
                     JSONB_ARRAY_ELEMENTS(v.object_value) AS value
-                FROM
-                    (
-                    SELECT
-                        object_value
+                FROM (
+                    SELECT object_value
                     FROM stg.bus_routes
                     ORDER BY update_dt DESC
                     LIMIT 1
-                    ) AS v
+                ) AS v
             ) AS src
             LEFT JOIN (
                 SELECT DISTINCT ON (hk_route)
                     hk_route,
                     hash_diff
                 FROM dds.s_route_schedule
+                ORDER BY hk_route, load_dt DESC
             ) latest ON latest.hk_route = MD5((src.value ->> 'id')::TEXT)
             WHERE
                 (src.value ->> 'id')::INT != 0
                 AND MD5(
                     CONCAT_WS(
                         '||',
-                        (src.value ->> 'id')::TEXT,
                         (src.value ->> 'startTime')::TIME::TEXT,
                         (src.value ->> 'endTime')::TIME::TEXT
                     )
@@ -173,16 +170,15 @@ async def s_route_name(
                 MD5((src.value ->> 'id')::TEXT) AS hk_route,
             
                 (src.value ->> 'uzNameA') AS origin_name_uz,
-                (src.value ->> 'nameA') AS origin_name_ru,
+                (src.value ->> 'nameA')   AS origin_name_ru,
                 (src.value ->> 'uzNameB') AS destination_name_uz,
-                (src.value ->> 'nameB') AS destination_name_ru,
+                (src.value ->> 'nameB')   AS destination_name_ru,
             
                 NOW() AS load_dt,
                 'stg.bus_routes' AS load_source,
                 MD5(
                     CONCAT_WS(
                         '||',
-                        (src.value ->> 'id')::TEXT,
                         (src.value ->> 'uzNameA'),
                         (src.value ->> 'nameA'),
                         (src.value ->> 'uzNameB'),
@@ -192,27 +188,25 @@ async def s_route_name(
             FROM (
                 SELECT
                     JSONB_ARRAY_ELEMENTS(v.object_value) AS value
-                FROM
-                    (
-                    SELECT
-                        object_value
+                FROM (
+                    SELECT object_value
                     FROM stg.bus_routes
                     ORDER BY update_dt DESC
                     LIMIT 1
-                    ) AS v
+                ) AS v
             ) AS src
             LEFT JOIN (
                 SELECT DISTINCT ON (hk_route)
                     hk_route,
                     hash_diff
                 FROM dds.s_route_name
+                ORDER BY hk_route, load_dt DESC
             ) latest ON latest.hk_route = MD5((src.value ->> 'id')::TEXT)
             WHERE
                 (src.value ->> 'id')::INT != 0
                 AND MD5(
                     CONCAT_WS(
                         '||',
-                        (src.value ->> 'id')::TEXT,
                         (src.value ->> 'uzNameA'),
                         (src.value ->> 'nameA'),
                         (src.value ->> 'uzNameB'),
@@ -257,6 +251,7 @@ async def s_route_path_origin(
                     (object_value -> 'coordsTwo')::JSONB   AS path
                 FROM stg.bus_stations
                 WHERE (object_value #>> '{route, id}')::INT != 0
+                ORDER BY (object_value #>> '{route, id}')::INT, update_dt DESC
             ),
             
             src_with_geo AS (
@@ -273,7 +268,7 @@ async def s_route_path_origin(
                 FROM src
                 CROSS JOIN LATERAL (
                     SELECT val, ord
-                    FROM jsonb_array_elements(src.path) WITH ORDINALITY AS p(val, ord)
+                    FROM JSONB_ARRAY_ELEMENTS(src.path) WITH ORDINALITY AS p(val, ord)
                 ) p
                 GROUP BY route_id
             ),
@@ -282,25 +277,23 @@ async def s_route_path_origin(
                 SELECT
                     hk_route,
                     path,
-                    MD5(
-                        CONCAT_WS('||', route_id::TEXT, ST_AsBinary(path))
-                    ) AS hash_diff
+                    MD5(ST_AsText(path)) AS hash_diff
                 FROM src_with_geo
             ),
             
             latest AS (
-                SELECT
+                SELECT DISTINCT ON (hk_route)
                     hk_route,
                     hash_diff
                 FROM dds.s_route_path_origin
-                ORDER BY hk_route
+                ORDER BY hk_route, load_dt DESC
             )
             
             SELECT
                 s.hk_route,
                 s.path,
-                NOW()               AS load_dt,
-                'stg.bus_stations'  AS load_source,
+                NOW()              AS load_dt,
+                'stg.bus_stations' AS load_source,
                 s.hash_diff
             FROM src_hashed s
             LEFT JOIN latest l ON l.hk_route = s.hk_route
@@ -343,6 +336,7 @@ async def s_route_path_destination(
                     (object_value -> 'coordsOne')::JSONB   AS path
                 FROM stg.bus_stations
                 WHERE (object_value #>> '{route, id}')::INT != 0
+                ORDER BY (object_value #>> '{route, id}')::INT, update_dt DESC
             ),
             
             src_with_geo AS (
@@ -359,7 +353,7 @@ async def s_route_path_destination(
                 FROM src
                 CROSS JOIN LATERAL (
                     SELECT val, ord
-                    FROM jsonb_array_elements(src.path) WITH ORDINALITY AS p(val, ord)
+                    FROM JSONB_ARRAY_ELEMENTS(src.path) WITH ORDINALITY AS p(val, ord)
                 ) p
                 GROUP BY route_id
             ),
@@ -368,25 +362,23 @@ async def s_route_path_destination(
                 SELECT
                     hk_route,
                     path,
-                    MD5(
-                        CONCAT_WS('||', route_id::TEXT, ST_AsBinary(path))
-                    ) AS hash_diff
+                    MD5(ST_AsText(path)) AS hash_diff
                 FROM src_with_geo
             ),
             
             latest AS (
-                SELECT
+                SELECT DISTINCT ON (hk_route)
                     hk_route,
                     hash_diff
                 FROM dds.s_route_path_destination
-                ORDER BY hk_route
+                ORDER BY hk_route, load_dt DESC
             )
             
             SELECT
                 s.hk_route,
                 s.path,
-                NOW()               AS load_dt,
-                'stg.bus_stations'  AS load_source,
+                NOW()              AS load_dt,
+                'stg.bus_stations' AS load_source,
                 s.hash_diff
             FROM src_hashed s
             LEFT JOIN latest l ON l.hk_route = s.hk_route

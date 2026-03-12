@@ -6,6 +6,7 @@ WITH src AS (
         (object_value -> 'coordsTwo')::JSONB   AS path
     FROM stg.bus_stations
     WHERE (object_value #>> '{route, id}')::INT != 0
+    ORDER BY (object_value #>> '{route, id}')::INT, update_dt DESC
 ),
 
 src_with_geo AS (
@@ -22,7 +23,7 @@ src_with_geo AS (
     FROM src
     CROSS JOIN LATERAL (
         SELECT val, ord
-        FROM jsonb_array_elements(src.path) WITH ORDINALITY AS p(val, ord)
+        FROM JSONB_ARRAY_ELEMENTS(src.path) WITH ORDINALITY AS p(val, ord)
     ) p
     GROUP BY route_id
 ),
@@ -31,25 +32,23 @@ src_hashed AS (
     SELECT
         hk_route,
         path,
-        MD5(
-            CONCAT_WS('||', route_id::TEXT, ST_AsBinary(path))
-        ) AS hash_diff
+        MD5(ST_AsText(path)) AS hash_diff
     FROM src_with_geo
 ),
 
 latest AS (
-    SELECT
+    SELECT DISTINCT ON (hk_route)
         hk_route,
         hash_diff
     FROM dds.s_route_path_origin
-    ORDER BY hk_route
+    ORDER BY hk_route, load_dt DESC
 )
 
 SELECT
     s.hk_route,
     s.path,
-    NOW()               AS load_dt,
-    'stg.bus_stations'  AS load_source,
+    NOW()              AS load_dt,
+    'stg.bus_stations' AS load_source,
     s.hash_diff
 FROM src_hashed s
 LEFT JOIN latest l ON l.hk_route = s.hk_route
