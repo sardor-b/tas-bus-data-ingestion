@@ -345,6 +345,7 @@ async def s_bus_movement(
                 md5(
                     concat_ws(
                         '||',
+                        bus_id,
                         st_asbinary(location),
                         speed,
                         course,
@@ -359,6 +360,7 @@ async def s_bus_movement(
                 md5(
                     concat_ws(
                         '||',
+                        bus_id,
                         st_asbinary(location),
                         speed,
                         course,
