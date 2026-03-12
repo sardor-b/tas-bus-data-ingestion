@@ -36,7 +36,7 @@ def load_h_bus(context: OpExecutionContext):
     )
 
 @op
-def load_s_bus_garage_number(context: OpExecutionContext, wait_for):
+def load_s_bus_garage_number(context: OpExecutionContext, wait):
     asyncio.run(
         s_bus_garage_number(
             host=host,
@@ -48,7 +48,7 @@ def load_s_bus_garage_number(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_bus_license_plate(context: OpExecutionContext, wait_for):
+def load_s_bus_license_plate(context: OpExecutionContext, wait):
     asyncio.run(
         s_bus_license_plate(
             host=host,
@@ -60,7 +60,7 @@ def load_s_bus_license_plate(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_bus_model(context: OpExecutionContext, wait_for):
+def load_s_bus_model(context: OpExecutionContext, wait):
     asyncio.run(
         s_bus_model(
             host=host,
@@ -72,7 +72,7 @@ def load_s_bus_model(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_bus_movement(context: OpExecutionContext, wait_for):
+def load_s_bus_movement(context: OpExecutionContext, wait):
     asyncio.run(
         s_bus_movement(
             host=host,
@@ -87,9 +87,9 @@ def load_s_bus_movement(context: OpExecutionContext, wait_for):
 def ingest_bus_job():
     action_1 = load_h_bus
 
-    load_s_bus_license_plate(wait_for=action_1)
-    load_s_bus_model(wait_for=action_1)
-    load_s_bus_movement(wait_for=action_1)
+    load_s_bus_license_plate(wait=action_1)
+    load_s_bus_model(wait=action_1)
+    load_s_bus_movement(wait=action_1)
 
 
 bus_schedule = ScheduleDefinition(

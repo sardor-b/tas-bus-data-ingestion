@@ -39,7 +39,7 @@ def op_ingest_station(context: OpExecutionContext):
 
 
 @op
-def load_h_station(context: OpExecutionContext, wait_for):
+def load_h_station(context: OpExecutionContext, wait):
     asyncio.run(
         h_station(
             host=host,
@@ -51,7 +51,7 @@ def load_h_station(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_station_location(context: OpExecutionContext, wait_for):
+def load_s_station_location(context: OpExecutionContext, wait):
     asyncio.run(
         s_station_location(
             host=host,
@@ -63,7 +63,7 @@ def load_s_station_location(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_station_name(context: OpExecutionContext, wait_for):
+def load_s_station_name(context: OpExecutionContext, wait):
     asyncio.run(
         s_station_name(
             host=host,
@@ -79,10 +79,10 @@ def load_s_station_name(context: OpExecutionContext, wait_for):
 def ingest_station_job():
     action_1 = op_ingest_station()
 
-    action_2 = h_station(wait_for=action_1)
+    action_2 = h_station(wait=action_1)
 
-    s_station_name(wait_for=action_2)
-    s_station_location(wait_for=action_2)
+    s_station_name(wait=action_2)
+    s_station_location(wait=action_2)
 
 
 # Runs every day at 01:00 AM GMT+5 (= 20:00 UTC)

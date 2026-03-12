@@ -41,7 +41,7 @@ def op_ingest_route(context: OpExecutionContext):
 
 
 @op
-def load_h_route(context: OpExecutionContext, wait_for):
+def load_h_route(context: OpExecutionContext, wait):
     asyncio.run(
         h_route(
             host=host,
@@ -53,7 +53,7 @@ def load_h_route(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_route_name(context: OpExecutionContext, wait_for):
+def load_s_route_name(context: OpExecutionContext, wait):
     asyncio.run(
         s_route_name(
             host=host,
@@ -65,7 +65,7 @@ def load_s_route_name(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_route_schedule(context: OpExecutionContext, wait_for):
+def load_s_route_schedule(context: OpExecutionContext, wait):
     asyncio.run(
         s_route_schedule(
             host=host,
@@ -77,7 +77,7 @@ def load_s_route_schedule(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_route_path_destination(context: OpExecutionContext, wait_for):
+def load_s_route_path_destination(context: OpExecutionContext, wait):
     asyncio.run(
         s_route_path_destination(
             host=host,
@@ -89,7 +89,7 @@ def load_s_route_path_destination(context: OpExecutionContext, wait_for):
     )
 
 @op
-def load_s_route_path_origin(context: OpExecutionContext, wait_for):
+def load_s_route_path_origin(context: OpExecutionContext, wait):
     asyncio.run(
         s_route_path_origin(
             host=host,
@@ -105,12 +105,12 @@ def load_s_route_path_origin(context: OpExecutionContext, wait_for):
 def ingest_route_job():
     action_1 = op_ingest_route()
 
-    action_2 = load_h_route(wait_for=action_1)
+    action_2 = load_h_route(wait=action_1)
 
-    load_s_route_name(wait_for=action_2)
-    load_s_route_schedule(wait_for=action_2)
-    load_s_route_path_destination(wait_for=action_2)
-    load_s_route_path_origin(wait_for=action_2)
+    load_s_route_name(wait=action_2)
+    load_s_route_schedule(wait=action_2)
+    load_s_route_path_destination(wait=action_2)
+    load_s_route_path_origin(wait=action_2)
 
 
 # Runs every day at 01:00 AM UTC +5 (= 20:00 UTC)
