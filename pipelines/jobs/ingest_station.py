@@ -85,10 +85,9 @@ def ingest_station_job():
     load_s_station_location(wait=action_2)
 
 
-# Runs every day at 01:00 AM GMT+5 (= 20:00 UTC)
 bus_stations_schedule = ScheduleDefinition(
     job=ingest_station_job,
-    cron_schedule="0 20 * * *",
-    name="ingest stations daily @ 1AM UTC +5",
-    execution_timezone="UTC",
+    cron_schedule="0 1 * * *",  # 01:00 AM
+    name="ingest_stations_daily_local",
+    execution_timezone="Asia/Tashkent", # GMT+5 timezone
 )
