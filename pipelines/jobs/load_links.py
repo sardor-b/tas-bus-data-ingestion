@@ -67,7 +67,7 @@ def load_links_job():
     op_truncate_stg_bus_gps_updates(action_1)
 
 
-links_load_schedule = ScheduleDefinition(
+load_links_schedule = ScheduleDefinition(
     job=load_links_job,
     cron_schedule="30 2 * * *",  # 02:30 AM
     name="load_links_daily_local",
