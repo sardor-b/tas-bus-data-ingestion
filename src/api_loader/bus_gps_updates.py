@@ -48,7 +48,7 @@ async def ingest_bus_gps_updates(
     # Single connection reused for both read and write
     async with await psycopg.AsyncConnection.connect(conninfo) as conn:
         async with conn.cursor(row_factory=dict_row) as cur:
-            await cur.execute("SELECT DISTINCT route_id FROM dds.routes")
+            await cur.execute("SELECT DISTINCT route_id FROM dds.h_route;")
             bus_routes = await cur.fetchall()
 
         headers = {

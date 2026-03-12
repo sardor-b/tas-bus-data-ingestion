@@ -51,10 +51,7 @@ async def ingest_bus_stations(
     )
 
     bus_routes = await db.fetch(
-        query="""
-            select distinct route_id
-            from dds.routes
-        """
+        query="SELECT DISTINCT route_id FROM dds.h_route;"
     )
 
     headers = {
