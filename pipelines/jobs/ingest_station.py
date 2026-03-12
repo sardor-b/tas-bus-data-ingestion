@@ -79,10 +79,10 @@ def load_s_station_name(context: OpExecutionContext, wait):
 def ingest_station_job():
     action_1 = op_ingest_station()
 
-    action_2 = h_station(wait=action_1)
+    action_2 = load_h_station(wait=action_1)
 
-    s_station_name(wait=action_2)
-    s_station_location(wait=action_2)
+    load_s_station_name(wait=action_2)
+    load_s_station_location(wait=action_2)
 
 
 # Runs every day at 01:00 AM GMT+5 (= 20:00 UTC)

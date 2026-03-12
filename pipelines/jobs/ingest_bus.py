@@ -85,7 +85,7 @@ def load_s_bus_movement(context: OpExecutionContext, wait):
 
 @job
 def ingest_bus_job():
-    action_1 = load_h_bus
+    action_1 = load_h_bus()
 
     load_s_bus_license_plate(wait=action_1)
     load_s_bus_model(wait=action_1)
