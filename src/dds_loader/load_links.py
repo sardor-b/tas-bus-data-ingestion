@@ -169,7 +169,7 @@ async def truncate_stg_bus_updates(
     )
 
     await db.execute(
-        query="TRUNCATE bus_gps_updates;",
+        query="TRUNCATE stg.bus_gps_updates;",
         params={}
     )
 

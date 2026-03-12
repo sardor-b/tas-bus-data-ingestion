@@ -48,16 +48,15 @@ def load_l_route_station(context: OpExecutionContext):
 
 @op
 def op_truncate_stg_bus_gps_updates(context: OpExecutionContext, wait):
-    # asyncio.run(
-    #     truncate_stg_bus_updates(
-    #         host=host,
-    #         port=port,
-    #         database=database,
-    #         user=user,
-    #         password=password
-    #     )
-    # )
-    logger.info("TRUNCATED")
+    asyncio.run(
+        truncate_stg_bus_updates(
+            host=host,
+            port=port,
+            database=database,
+            user=user,
+            password=password
+        )
+    )
 
 
 @job
