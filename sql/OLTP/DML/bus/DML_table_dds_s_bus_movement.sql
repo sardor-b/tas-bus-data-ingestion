@@ -65,4 +65,6 @@ WHERE md5(
         direction,
         ping_dt
     )
-) IS DISTINCT FROM l.hash_diff;
+) IS DISTINCT FROM l.hash_diff
+ON CONFLICT (hk_bus, ping_dt)
+    DO NOTHING;

@@ -316,7 +316,9 @@ async def s_bus_movement(
                     direction,
                     ping_dt
                 )
-            ) IS DISTINCT FROM l.hash_diff;
+            ) IS DISTINCT FROM l.hash_diff
+            ON CONFLICT (hk_bus, ping_dt)
+                DO NOTHING;
         """,
         params={}
     )
