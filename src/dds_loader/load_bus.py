@@ -88,44 +88,27 @@ async def s_bus_model(
         query="""
             INSERT INTO dds.s_bus_model (hk_bus, model, load_dt, load_source, hash_diff)
             WITH latest AS (
-                SELECT
+                SELECT DISTINCT ON (hk_bus)
                     hk_bus,
                     hash_diff
                 FROM dds.s_bus_model
-                ORDER BY hk_bus
+                ORDER BY hk_bus, load_dt DESC
             )
             SELECT
-                md5(src.bus_hash_id) as hk_bus,
-            
+                md5(src.bus_hash_id) AS hk_bus,
                 src.bus_model,
-            
-                NOW() AS load_dt,
-                'stg.bus_gps_updates' as load_source,
-                md5(
-                    concat_ws(
-                        '||',
-                        src.bus_hash_id,
-                        src.bus_model
-                    )
-                ) AS hash_diff
+                NOW()                AS load_dt,
+                'stg.bus_gps_updates' AS load_source,
+                md5(src.bus_model)   AS hash_diff
             FROM (
                 SELECT DISTINCT ON (v #>> '{bus, id}')
                     v #>> '{bus, id}' AS bus_hash_id,
                     v #>> '{bus, innerType}' AS bus_model
-                FROM
-                    stg.bus_gps_updates,
+                FROM stg.bus_gps_updates,
                 LATERAL jsonb_array_elements(object_value) AS v
             ) src
-            LEFT JOIN latest l on l.hk_bus = md5(src.bus_hash_id)
-            WHERE
-                md5(
-                    concat_ws(
-                        '||',
-                        src.bus_hash_id,
-                        src.bus_model
-                    )
-                ) IS DISTINCT FROM l.hash_diff
-            ;
+            LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
+            WHERE md5(src.bus_model) IS DISTINCT FROM l.hash_diff;
         """,
         params={}
     )
@@ -162,7 +145,7 @@ async def s_bus_license_plate(
                     hk_bus,
                     hash_diff
                 FROM dds.s_bus_license_plate
-                ORDER BY hk_bus
+                ORDER BY hk_bus, load_dt DESC
             )
             SELECT
                 md5(src.bus_hash_id) as hk_bus,
@@ -171,13 +154,7 @@ async def s_bus_license_plate(
             
                 NOW() AS load_dt,
                 'stg.bus_gps_updates' as load_source,
-                md5(
-                    concat_ws(
-                        '||',
-                        src.bus_hash_id,
-                        src.license_plate
-                    )
-                ) AS hash_diff
+                md5(src.license_plate) AS hash_diff
             FROM (
                 SELECT DISTINCT ON (v #>> '{bus, id}')
                     v #>> '{bus, id}' AS bus_hash_id,
@@ -187,14 +164,7 @@ async def s_bus_license_plate(
                 LATERAL jsonb_array_elements(object_value) AS v
             ) src
             LEFT JOIN latest l on l.hk_bus = md5(src.bus_hash_id)
-            WHERE
-                md5(
-                    concat_ws(
-                        '||',
-                        src.bus_hash_id,
-                        src.license_plate
-                    )
-                ) IS DISTINCT FROM l.hash_diff
+            WHERE md5(src.license_plate) IS DISTINCT FROM l.hash_diff
             ;
         """,
         params={}
@@ -228,44 +198,27 @@ async def s_bus_garage_number(
         query="""
             INSERT INTO dds.s_bus_garage_number (hk_bus, garage_number, load_dt, load_source, hash_diff)
             WITH latest AS (
-                SELECT
+                SELECT DISTINCT ON (hk_bus)
                     hk_bus,
                     hash_diff
                 FROM dds.s_bus_garage_number
-                ORDER BY hk_bus
+                ORDER BY hk_bus, load_dt DESC
             )
             SELECT
-                md5(src.bus_hash_id) as hk_bus,
-            
+                md5(src.bus_hash_id)   AS hk_bus,
                 src.garage_number,
-            
-                NOW() AS load_dt,
-                'stg.bus_gps_updates' as load_source,
-                md5(
-                    concat_ws(
-                        '||',
-                        src.bus_hash_id,
-                        src.garage_number
-                    )
-                ) AS hash_diff
+                NOW()                  AS load_dt,
+                'stg.bus_gps_updates'  AS load_source,
+                md5(src.garage_number) AS hash_diff
             FROM (
                 SELECT DISTINCT ON (v #>> '{bus, id}')
                     v #>> '{bus, id}' AS bus_hash_id,
                     v #>> '{bus, gar}' AS garage_number
-                FROM
-                    stg.bus_gps_updates,
+                FROM stg.bus_gps_updates,
                 LATERAL jsonb_array_elements(object_value) AS v
             ) src
-            LEFT JOIN latest l on l.hk_bus = md5(src.bus_hash_id)
-            WHERE
-                md5(
-                    concat_ws(
-                        '||',
-                        src.bus_hash_id,
-                        src.garage_number
-                    )
-                ) IS DISTINCT FROM l.hash_diff
-            ;
+            LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
+            WHERE md5(src.garage_number) IS DISTINCT FROM l.hash_diff;
         """,
         params={}
     )
@@ -296,80 +249,74 @@ async def s_bus_movement(
 
     await db.execute(
         query="""
-            insert into dds.s_bus_movement (hk_bus, location, speed, course, status, direction, ping_dt, load_dt, load_source, hash_diff)
-            with bus_gps_updates as (
-                select
+            INSERT INTO dds.s_bus_movement (hk_bus, location, speed, course, status, direction, ping_dt, load_dt, load_source, hash_diff)
+            WITH bus_gps_updates AS (
+                SELECT
                     update_dt,
-                    jsonb_array_elements(object_value) as v
-                from stg.bus_gps_updates
+                    jsonb_array_elements(object_value) AS v
+                FROM stg.bus_gps_updates
             ),
             latest AS (
-                SELECT
+                SELECT DISTINCT ON (hk_bus)
                     hk_bus,
                     hash_diff
-                FROM dds.s_bus_garage_number
-                ORDER BY hk_bus
+                FROM dds.s_bus_movement
+                ORDER BY hk_bus, load_dt DESC
             ),
-            bus_movement as (
-                select
-                    v #>> '{bus, id}' as bus_id,
+            bus_movement AS (
+                SELECT DISTINCT ON (bus_id, ping_dt)
+                    v #>> '{bus, id}'  AS bus_id,
                     st_setsrid(
                         st_makepoint(
-                            (v #>> '{bus, ly}')::float,
-                            (v #>> '{bus, lx}')::float
+                            (v #>> '{bus, ly}')::float,  -- longitude first
+                            (v #>> '{bus, lx}')::float   -- latitude second
                         ), 4326
-                    ) as location, -- location ping
-                    (v #>> '{bus, speed}') as speed,
-                    (v #>> '{course}') as course,
-                    v #>> '{status}' as status,
-                    case
-                        when (v #>> '{qDirection}')::int = 1 then 'origin'
-                        when (v #>> '{qDirection}')::int = 0 then 'destination'
-                        when (v #>> '{qDirection}')::int = -1 then 'None'
-                    end as direction,
-                    update_dt as ping_dt
-                from bus_gps_updates
+                    )                  AS location,
+                    v #>> '{bus, speed}' AS speed,
+                    v #>> '{course}'     AS course,
+                    v #>> '{status}'     AS status,
+                    CASE
+                        WHEN (v #>> '{qDirection}')::int =  1 THEN 'origin'
+                        WHEN (v #>> '{qDirection}')::int =  0 THEN 'destination'
+                        WHEN (v #>> '{qDirection}')::int = -1 THEN 'None'
+                    END                  AS direction,
+                    update_dt            AS ping_dt
+                FROM bus_gps_updates
             )
-            select
-                md5(bus_id) as hk_bus,
-            
+            SELECT
+                md5(bus_id)          AS hk_bus,
                 location,
                 speed::numeric(5,1),
                 course::int,
                 status,
                 direction,
                 ping_dt,
-            
-                now() as load_dt,
-                'stg.bus_gps_updates' as load_source,
+                NOW()                AS load_dt,
+                'stg.bus_gps_updates' AS load_source,
                 md5(
                     concat_ws(
                         '||',
-                        bus_id,
-                        st_asbinary(location),
+                        st_astext(location),
                         speed,
                         course,
                         status,
                         direction,
                         ping_dt
                     )
-                ) as hash_diff
-            from bus_movement
-            left join latest l on l.hk_bus = md5(bus_id)
-            where
-                md5(
-                    concat_ws(
-                        '||',
-                        bus_id,
-                        st_asbinary(location),
-                        speed,
-                        course,
-                        status,
-                        direction,
-                        ping_dt
-                    )
-                ) is distinct from l.hash_diff
-            ;
+                )                    AS hash_diff
+            FROM bus_movement
+            LEFT JOIN latest l ON l.hk_bus = md5(bus_id)
+            WHERE md5(
+                concat_ws(
+                    '||',
+                    st_astext(location),
+                    speed,
+                    course,
+                    status,
+                    direction,
+                    ping_dt
+                )
+            ) IS DISTINCT FROM l.hash_diff;
         """,
         params={}
     )
