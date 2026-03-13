@@ -141,19 +141,17 @@ async def s_bus_license_plate(
         query="""
             INSERT INTO dds.s_bus_license_plate (hk_bus, license_plate, load_dt, load_source, hash_diff)
             WITH latest AS (
-                SELECT
+                SELECT DISTINCT ON (hk_bus)
                     hk_bus,
                     hash_diff
-                FROM dds.s_bus_license_plate
+                FROM dds.s_bus_license_plate    
                 ORDER BY hk_bus, load_dt DESC
             )
             SELECT
-                md5(src.bus_hash_id) as hk_bus,
-            
+                md5(src.bus_hash_id) AS hk_bus,
                 src.license_plate,
-            
                 NOW() AS load_dt,
-                'stg.bus_gps_updates' as load_source,
+                'stg.bus_gps_updates' AS load_source,
                 md5(src.license_plate) AS hash_diff
             FROM (
                 SELECT DISTINCT ON (v #>> '{bus, id}')
@@ -163,9 +161,9 @@ async def s_bus_license_plate(
                     stg.bus_gps_updates,
                 LATERAL jsonb_array_elements(object_value) AS v
             ) src
-            LEFT JOIN latest l on l.hk_bus = md5(src.bus_hash_id)
+            LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
             WHERE md5(src.license_plate) IS DISTINCT FROM l.hash_diff
-            ;
+            ON CONFLICT (hk_bus, load_dt) DO NOTHING;
         """,
         params={}
     )
