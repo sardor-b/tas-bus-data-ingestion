@@ -23,4 +23,5 @@ FROM (
 ) src
 LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
 WHERE md5(src.license_plate) IS DISTINCT FROM l.hash_diff
-ON CONFLICT (hk_bus, load_dt) DO NOTHING;
+ON CONFLICT (hk_bus, load_dt)
+    DO NOTHING;

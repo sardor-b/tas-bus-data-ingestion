@@ -1,4 +1,3 @@
--- dds.s_bus_garage_number
 INSERT INTO dds.s_bus_garage_number (hk_bus, garage_number, load_dt, load_source, hash_diff)
 WITH latest AS (
     SELECT DISTINCT ON (hk_bus)
@@ -21,4 +20,6 @@ FROM (
     LATERAL jsonb_array_elements(object_value) AS v
 ) src
 LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
-WHERE md5(src.garage_number) IS DISTINCT FROM l.hash_diff;
+WHERE md5(src.garage_number) IS DISTINCT FROM l.hash_diff
+ON CONFLICT (hk_bus, load_dt)
+    DO NOTHING;

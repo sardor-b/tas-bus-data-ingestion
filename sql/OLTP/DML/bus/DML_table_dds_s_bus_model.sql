@@ -21,4 +21,7 @@ FROM (
     LATERAL jsonb_array_elements(object_value) AS v
 ) src
 LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
-WHERE md5(src.bus_model) IS DISTINCT FROM l.hash_diff;
+WHERE md5(src.bus_model) IS DISTINCT FROM l.hash_diff
+ON CONFLICT (hk_bus, load_dt)
+    DO NOTHING
+;

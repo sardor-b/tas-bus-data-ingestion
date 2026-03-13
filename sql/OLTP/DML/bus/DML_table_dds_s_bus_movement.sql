@@ -58,4 +58,6 @@ LEFT JOIN latest l
     ON l.hk_bus = md5(bus_id)
     AND l.ping_dt = bm.ping_dt
 WHERE l.hk_bus IS NULL
+ON CONFLICT DO
+    NOTHING
 ;
