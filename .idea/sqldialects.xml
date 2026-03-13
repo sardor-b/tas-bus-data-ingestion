@@ -22,6 +22,7 @@
     <file url="file://$PROJECT_DIR$/sql/OLTP/DDL/STG/DDL_table_stg_bus_stations.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DML/DML_table_dds_l_route_bus.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DML/bus/DML_table_dds_s_bus_garage_number.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/sql/OLTP/DML/bus/DML_table_dds_s_bus_license_plate.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/sql/OLTP/DML/bus/DML_table_dds_s_bus_movement.sql" dialect="PostgreSQL" />
   </component>
 </project>

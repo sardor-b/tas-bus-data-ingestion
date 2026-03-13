@@ -70,7 +70,6 @@ async def h_route(
 
     logger.info(f"END dds.h_route load. Loaded {after[0]['count'] - before[0]['count']} records.")
 
-
 async def s_route_schedule(
     host: str,
     port: str,
@@ -142,7 +141,6 @@ async def s_route_schedule(
     after = await db.fetch('SELECT count(hk_route) FROM dds.s_route_schedule;')
 
     logger.info(f"END dds.s_route_schedule load. Loaded {after[0]['count'] - before[0]['count']} records.")
-
 
 async def s_route_name(
     host: str,
@@ -222,6 +220,64 @@ async def s_route_name(
 
     logger.info(f"END dds.s_route_name load. Loaded {after[0]['count'] - before[0]['count']} records.")
 
+async def s_route_number(
+    host: str,
+    port: str,
+    database: str,
+    user: str,
+    password: str,
+):
+    logger.info("START dds.s_route_number load")
+
+    db = AsyncPostgresConnector(
+        host=host,
+        port=port,
+        db=database,
+        user=user,
+        password=password
+    )
+
+    before = await db.fetch('SELECT count(hk_route) FROM dds.s_route_number;')
+
+    await db.execute(
+        query="""
+            INSERT INTO dds.s_route_number (hk_route, number, load_dt, load_source, hash_diff)
+            SELECT
+                MD5((src.value ->> 'id')::TEXT) AS hk_route,
+            
+                (src.value ->> 'name') AS number,
+            
+                NOW() AS load_dt,
+                'stg.bus_routes' AS load_source,
+                MD5(src.value ->> 'name') AS hash_diff
+            FROM (
+                SELECT
+                    JSONB_ARRAY_ELEMENTS(v.object_value) AS value
+                FROM (
+                    SELECT object_value
+                    FROM stg.bus_routes
+                    ORDER BY update_dt DESC
+                    LIMIT 1
+                ) AS v
+            ) AS src
+            LEFT JOIN (
+                SELECT DISTINCT ON (hk_route)
+                    hk_route,
+                    hash_diff
+                FROM dds.s_route_number
+                ORDER BY hk_route, load_dt DESC
+            ) latest ON latest.hk_route = MD5((src.value ->> 'id')::TEXT)
+            WHERE
+                (src.value ->> 'id')::INT != 0
+                AND MD5(src.value ->> 'name') IS DISTINCT FROM latest.hash_diff
+            ;
+        """,
+        params={}
+    )
+
+    after = await db.fetch('SELECT count(hk_route) FROM dds.s_route_number;')
+
+    logger.info(f"END dds.s_route_number load. Loaded {after[0]['count'] - before[0]['count']} records.")
 
 async def s_route_path_origin(
     host: str,
@@ -306,7 +362,6 @@ async def s_route_path_origin(
     after = await db.fetch('SELECT count(hk_route) FROM dds.s_route_path_origin;')
 
     logger.info(f"END dds.s_route_path_origin load. Loaded {after[0]['count'] - before[0]['count']} records.")
-
 
 async def s_route_path_destination(
     host: str,

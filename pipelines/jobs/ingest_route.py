@@ -8,6 +8,7 @@ from dagster import op, job, OpExecutionContext, ScheduleDefinition
 from src.dds_loader.load_route import (
     h_route,
     s_route_name,
+    s_route_number,
     s_route_schedule,
     s_route_path_destination,
     s_route_path_origin
@@ -65,6 +66,19 @@ def load_s_route_name(context: OpExecutionContext, wait):
     )
 
 @op
+def load_s_route_number(context: OpExecutionContext, wait):
+    asyncio.run(
+        s_route_number(
+            host=host,
+            port=port,
+            database=database,
+            user=user,
+            password=password
+        )
+    )
+
+
+@op
 def load_s_route_schedule(context: OpExecutionContext, wait):
     asyncio.run(
         s_route_schedule(
@@ -108,6 +122,7 @@ def ingest_route_job():
     action_2 = load_h_route(wait=action_1)
 
     load_s_route_name(wait=action_2)
+    load_s_route_number(wait=action_2)
     load_s_route_schedule(wait=action_2)
     load_s_route_path_destination(wait=action_2)
     load_s_route_path_origin(wait=action_2)
