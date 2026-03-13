@@ -166,7 +166,9 @@ async def s_bus_license_plate(
             ) src
             LEFT JOIN latest l ON l.hk_bus = md5(src.bus_hash_id)
             WHERE md5(src.license_plate) IS DISTINCT FROM l.hash_diff
-            ON CONFLICT (hk_bus, load_dt) DO NOTHING;
+            ON CONFLICT (hk_bus, load_dt) 
+                DO NOTHING
+            ;
         """,
         params={}
     )
@@ -312,10 +314,9 @@ async def s_bus_movement(
                 ON l.hk_bus = md5(bus_id)
                 AND l.ping_dt = bm.ping_dt
             WHERE l.hk_bus IS NULL
-            ON CONFLICT (hk_bus, ping_dt) DO
-                NOTHING
-            ;
-            ;
+            ON CONFLICT (hk_bus, ping_dt) 
+                DO NOTHING
+        ;
         """,
         params={}
     )
